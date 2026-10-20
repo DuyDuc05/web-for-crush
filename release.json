@@ -1,0 +1,30 @@
+{
+  "app": "Mầm TSA",
+  "version": "0.1.0",
+  "production_sha256": {
+    "index.html": "9468a93f0c16645177a140a8120914e03dc2121fb7d1512b63e27c0596212e1c",
+    "app.js": "039c39ce0a7019b889159f36944cc5dd56ec6e7478801972016e2c557a03dab4",
+    "views.js": "5753992017c421b46a89f4681de54d740fa1f85ce66abc7dd62bf101aa657a44",
+    "quality.js": "bca030877c2c87654616b65875b7b8f2875752581ba9cbcb183c158487a2851b",
+    "learning.js": "064ce9588f1639efbf84b40a994526052b50591743249c1acfad0b68bbc12541",
+    "styles.css": "48080701b8bfbed24bf435714d7868bcb80f0f0e055965c05feb899076e554be",
+    "content.js": "776d0d26e602e4a33610f91970544b80f3d10929ab1a7ecfe611e40af1535e16",
+    "content/math.js": "8ae568ff4edcd62ce96ffc58177e27dd07227b43f7f503c2c55a7ba833a0f2a6",
+    "content/science.js": "cfa10852d48b52dd6bf6ca1d0c01b96f4c9ff8172834ad7b3fb76b3e2357cf1a",
+    "content/reading.js": "988b2ba0a1c0bfa16909c17023d97ac65b87ea55bea1c729cfa27f40e576ad70",
+    "ai.js": "557341b28806b1fc986cf530bc76921117b191b977468ce4a528ed412faf7485",
+    "storage.js": "98cb3e1470e888c3ca29876a044464f64aad707f7215a57b15bee3b072ea4669",
+    "server.mjs": "25fa83001b7154632d8102eea1b248a37638af5e7d934453a7aa89c4d54565dc",
+    "dist/mam-tsa.html": "7eb7a8992397d255a0c55a7687d840125f6fc94a3a210dcb7395f988fd6d4c91"
+  },
+  "html_sha256": "7eb7a8992397d255a0c55a7687d840125f6fc94a3a210dcb7395f988fd6d4c91",
+  "source_archive_sha256": "b2fab2943dfeec64e3b12d3091991fa32cb62b27f0e1ea2ab92bbd0545c26872",
+  "source_archive_files": 32,
+  "source_archive_matches_checkout": true,
+  "browser_qa": {
+    "desktop_passed": 30,
+    "phone_emulated_passed": 30,
+    "physical_devices_tested": false
+  },
+  "release_status": "verified-ready-for-hosting"
+}
