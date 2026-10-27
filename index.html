@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#195b3b">
-  <meta name="description" content="Mầm TSA — học hiểu từ nền tảng, luyện tập từng bước và theo dõi tiến bộ thật của bạn.">
-  <title>Mầm TSA — Hiểu từ gốc, tiến từng ngày</title>
+  <meta name="description" content="stem — học hiểu từ nền tảng, luyện tập từng bước và theo dõi tiến bộ thật của bạn.">
+  <title>stem — Hiểu từ gốc, tiến từng ngày</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23195b3b'/%3E%3Cpath d='M20 30V18M20 23C8 23 10 10 10 10c10 0 11 8 10 13Zm0-4C20 7 31 8 31 8c0 10-5 12-11 11Z' fill='%23d7f692' stroke='%23d7f692' stroke-width='2'/%3E%3C/svg%3E">
   
   
@@ -580,11 +580,338 @@ tr:last-child td { border-bottom: 0; }
 .weekly-item>p{margin:12px 0;line-height:1.8}
 .weekly-calendar summary:focus-visible,.weekly-item summary:focus-visible{outline:3px solid #719e42;outline-offset:4px;border-radius:6px}
 nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
+
+/* PC study workspace, based on the supplied desktop course/lesson reference.
+   Existing form and interaction styles remain available on every route. */
+:root {
+  --paper: #fff;
+  --surface: #fff;
+  --ink: #202020;
+  --muted: #686868;
+  --green: #176d36;
+  --green-dark: #10532a;
+  --green-soft: #eff9ef;
+  --lime: #29c63f;
+  --line: #e5e5e5;
+  --shadow: none;
+  --radius: 14px;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+html { scroll-padding-top: 88px; }
+body { background: #fff; color: var(--ink); }
+h1, h2, h3, h4 { letter-spacing: -.025em; font-weight: 700; }
+h1 { font-size: clamp(27px, 2.5vw, 34px); }
+h2 { font-size: 23px; }
+:focus-visible { outline-color: #3866cc; }
+.main { margin-left: 0; }
+.topbar {
+  display: block; min-height: 72px; padding: 0 24px; background: #fff;
+  border-bottom: 1px solid #e6e6e6; backdrop-filter: none;
+  -webkit-backdrop-filter: none; z-index: 35;
+}
+.topbar-inner {
+  display: flex; align-items: center; gap: 32px; min-height: 72px;
+  width: 100%; max-width: 1224px; margin: 0 auto;
+}
+.topbar .brand {
+  display: flex; flex-shrink: 0; gap: 9px; margin: 0; padding: 0;
+  font-size: 25px; letter-spacing: -.05em; min-height: 44px;
+}
+.brand-mark { width: 32px; height: 36px; background: transparent; color: #151515; }
+.brand-mark svg { width: 29px; height: 29px; }
+.brand-tsa { font-size: 14px; font-weight: 650; letter-spacing: -.01em; }
+.desktop-nav { display: flex; align-self: stretch; gap: 18px; }
+.desktop-nav .nav-item {
+  position: relative; width: auto; gap: 7px; padding: 0 3px;
+  border-radius: 0; white-space: nowrap; font-size: 14px; color: #777;
+}
+.desktop-nav .nav-item:hover { background: transparent; color: #1b1b1b; }
+.desktop-nav .nav-item.active { background: transparent; color: #1b1b1b; }
+.desktop-nav .nav-item.active::after {
+  position: absolute; content: ""; bottom: -1px; left: 0; right: 0;
+  height: 2px; background: #1b1b1b;
+}
+.desktop-nav .nav-icon, .desktop-nav .nav-icon svg { width: 17px; height: 17px; }
+.topbar-actions { margin-left: auto; gap: 8px; }
+.topbar .icon-btn { border: 0; border-radius: 50%; color: #3f3f3f; }
+.topbar .icon-btn:hover { background: #f3f3f3; }
+.topbar .study-timer { padding: 6px 10px; border: 1px solid #e3e3e3; border-radius: 24px; color: #454545; font-size: 13px; }
+.avatar { width: 36px; height: 36px; background: #f4f4f4; border-color: #ddd; color: #333; text-decoration: none; }
+.focus-caption { display: none; }
+.focus-mode .desktop-nav { display: none; }
+.focus-mode .focus-caption { display: block; color: #666; font-size: 13px; }
+#toast-root { pointer-events: none; }
+.answer-explanation { margin-top: 12px; }
+.answer-explanation > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 18px; border-radius: 24px; background: #e3e3e3; color: #262626; cursor: pointer; font-size: 13px; font-weight: 600; }
+.answer-explanation[open] > summary { margin-bottom: 16px; }
+.answer-explanation > summary:focus-visible { outline: 3px solid #3452e8; }
+.page-content { max-width: 1180px; padding: 42px 28px 52px; }
+.page-header { margin-bottom: 30px; }
+.page-header p { margin-top: 9px; font-size: 14px; }
+.current-section { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px; min-height: 32px; color: #707070; font-size: 12px; text-decoration: none; }
+.current-section:hover { color: #222; text-decoration: underline; }
+.current-section svg { width: 15px; height: 15px; }
+.eyebrow { color: #747474; letter-spacing: .08em; font-size: 10px; }
+.page-footer { border-top-color: #e8e8e8; color: #777; font-size: 12px; }
+.btn { border-radius: 28px; padding: 11px 22px; font-size: 13px; }
+.btn:hover, .btn:active { transform: none; }
+.btn-primary { background: #202020; color: white; }
+.btn-primary:hover { background: #050505; box-shadow: none; }
+.btn-secondary { border-color: #d9d9d9; background: white; }
+.btn-secondary:hover { background: #f5f5f5; border-color: #aaa; }
+.btn-ghost { color: #424242; background: transparent; }
+.btn-ghost:hover { background: #f3f3f3; }
+.btn-primary:disabled { background: #e7e7e7; color: #777; opacity: 1; }
+.icon-btn { border-color: #e3e3e3; border-radius: 10px; }
+.card, .daily-card, .stat-card, .journal-card { border-color: #e3e3e3; box-shadow: none; border-radius: 14px; }
+.chip, .tag, .badge { border-color: #dfdfdf; }
+.chip { color: #555; }
+.progress-track { height: 8px; background: #ededed; }
+.progress-fill, .progress-fill.lime { background: #2bc842; }
+.filter-tabs { gap: 9px; margin-bottom: 26px; }
+.filter-tab { border-radius: 24px; color: #666; padding: 8px 18px; }
+.filter-tab:hover { background: #f5f5f5; }
+.filter-tab.active { color: #222; background: #f3f3f3; border-color: #dedede; box-shadow: none; }
+
+/* Home: a clear next action and the learner's actual evidence. */
+.dashboard-grid { grid-template-columns: minmax(0, 1fr) 310px; gap: 24px; }
+.continue-card {
+  display: grid; grid-template-columns: minmax(0, 1fr) 210px; align-items: center;
+  gap: 16px; padding: 38px; border: 1px solid #dedede; border-radius: 16px;
+  background: linear-gradient(115deg, #fafafa, #fff 70%); min-width: 0;
+}
+.continue-copy { min-width: 0; }
+.continue-copy h2 { font-size: 30px; margin: 13px 0; line-height: 1.25; }
+.continue-copy > p { color: #666; font-size: 14px; line-height: 1.8; }
+.continue-copy .hero-actions { margin-top: 24px; gap: 10px; }
+.continue-copy .hero-actions .btn-primary { background: #202020; color: #fff; }
+.continue-copy .hero-actions .btn-primary:hover { background: #050505; }
+.continue-copy .hero-actions .btn-ghost { color: #333; background: transparent; }
+.continue-copy .hero-actions .btn-ghost:hover { background: #f0f0f0; }
+.continue-meta { display: flex; align-items: center; gap: 7px; margin-top: 22px; color: #777; font-size: 12px; }
+.continue-meta svg { width: 15px; height: 15px; }
+.continue-art { display: grid; place-items: center; min-width: 0; }
+.continue-art > svg { width: 100%; max-width: 240px; height: auto; }
+.daily-card { padding: 22px; gap: 14px; }
+.daily-summary { padding-top: 4px; border-top: 0; align-items: baseline; }
+.daily-summary strong { font-size: 32px; }
+.daily-summary strong small { color: #777; font-size: 15px; font-weight: 500; }
+.daily-plan { gap: 14px; margin-top: 5px; }
+.daily-plan-item { align-items: center; }
+.daily-step { display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0; border: 1px solid #e3e3e3; border-radius: 50%; font-size: 11px; color: #777; }
+.daily-plan-item p { font-size: 12px; color: #333; }
+.daily-plan-item small { font-size: 11px; color: #777; }
+.goal-caption { margin-top: 4px; padding-top: 13px; border-top: 1px solid #ededed; color: #777; font-size: 11px; line-height: 1.8; }
+.stat-card { padding: 20px 22px; background: #fff; }
+.stat-icon { background: #f0f8ec; color: #48782e; }
+.focus-card { background: #fafafa; border-color: #e3e3e3; border-radius: 14px; }
+.focus-card p { color: #666; }
+
+/* Course tiles: the image has its own frame; captions sit beneath it. */
+.course-group { padding: 18px 0 34px; border-bottom: 1px solid #e6e6e6; margin-bottom: 18px; }
+.course-group-heading { display: flex; align-items: center; gap: 17px; margin-bottom: 22px; }
+.course-group-heading h2 { font-size: 21px; }
+.course-group-heading p { color: #777; font-size: 12px; margin-top: 5px; }
+.domain-art { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 12px; background: #edf1ff; color: #3452e8; flex-shrink: 0; }
+.domain-art svg { width: 31px; height: 31px; }
+.domain-art.reading { background: #f4edff; color: #7752d9; }
+.domain-art.science { background: #fff6db; color: #a87300; }
+.course-count { margin-left: auto; color: #777; font-size: 12px; white-space: nowrap; }
+.course-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 23px 18px; }
+.topic-card { padding: 0; border: 0; border-radius: 0; gap: 7px; background: transparent; }
+.topic-card:hover { border-color: transparent; box-shadow: none; }
+.course-open { color: #222; text-decoration: none; display: block; }
+.course-thumbnail {
+  position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1.06;
+  border: 1px solid #e2e2e2; border-radius: 14px; background: #fff;
+  box-shadow: 0 2px 3px #00000005; transition: border-color .15s, box-shadow .15s;
+}
+.course-open:hover .course-thumbnail { border-color: #b5b5b5; box-shadow: 0 3px 10px #00000008; }
+.course-open:focus-visible { border-radius: 14px; }
+.course-art { width: 88%; max-width: 190px; height: auto; }
+.course-badge { position: absolute; right: 7px; top: 8px; max-width: calc(100% - 14px); padding: 3px 7px; border-radius: 20px; background: #167d2a; color: #fff; font-size: 9px; font-weight: 650; line-height: 1.4; }
+.course-badge.read { background: #eeeeee; color: #555; }
+.topic-card h3 { margin-top: 12px; font-size: 14px; line-height: 1.45; letter-spacing: -.015em; }
+.topic-card .course-description { font-size: 11px; line-height: 1.6; color: #777; }
+.topic-card .topic-meta { gap: 7px; font-size: 10px; }
+.course-evidence { color: #777; font-size: 10px; line-height: 1.6; }
+.topic-card .topic-footer { border: 0; padding-top: 0; margin-top: auto; }
+.topic-card .topic-footer .btn { font-size: 11px; padding: 7px 0; min-height: 36px; color: #555; }
+.topic-card .topic-footer .btn svg { width: 14px; height: 14px; }
+.recommended-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+.recommended-grid .course-thumbnail { aspect-ratio: 1.8; background: #fafafa; }
+.recommended-grid .course-art { max-width: 170px; }
+.recommended-grid .topic-card h3 { font-size: 17px; }
+.recommended-grid .course-description { font-size: 12px; }
+
+/* Focused reading and assessment: no sidebar competes with the question. */
+.focus-mode .page-content { max-width: 1000px; }
+.focus-mode .page-header { align-items: flex-start; }
+.focus-mode .page-header h1 { font-size: 28px; }
+.focus-mode .page-header .eyebrow { color: #777; }
+.lesson-reading-layout { display: block; max-width: 800px; margin: 0 auto; }
+.lesson-main { gap: 22px; }
+.lesson-step { padding: 28px 30px; border-color: #e4e4e4; border-radius: 12px; }
+.lesson-step > p { color: #444; font-size: 15px; }
+.lesson-step .step-number { background: #f4f4f4; border-color: #dedede; color: #666; }
+.lesson-aside { position: static; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+.lesson-aside .card { padding: 20px; }
+.visual-panel { border-color: #e6e6e6; background: #fafafa; border-radius: 12px; }
+.concept-dot { background: #f2f2f2; color: #666; }
+.example-answer { background: #f0faed; border-color: #d9ebd4; color: #265d28; }
+.form-control { border-color: #d9d9d9; border-radius: 10px; }
+.form-control:focus { border-color: #777; box-shadow: 0 0 0 3px #00000007; }
+.source-note { color: #777; border-color: #e6e6e6; }
+.app-shell[data-page="assessment"] .page-content { max-width: 890px; }
+.app-shell[data-page="assessment"] .page-header p { font-size: 12px; }
+.quiz-header { margin-top: 6px; }
+.assessment-layout { display: block; margin-top: 24px; }
+.question-card { padding: 15px 20px 0; border: 0; border-radius: 0; }
+.question-card h2 { font-size: 22px; line-height: 1.65; margin: 24px 0; }
+.question-context, .reading-passage { background: #fafafa; color: #333; border-color: #e3e3e3; border-radius: 9px; }
+.question-options { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.answer-option { min-height: 65px; border-color: #d9d9d9; border-radius: 9px; padding: 13px 15px; }
+.answer-option:hover:not(:disabled) { background: #fafafa; border-color: #8d8d8d; }
+.answer-option.selected, .answer-option[aria-pressed="true"] { background: #f7f7f7; border-color: #565656; box-shadow: 0 0 0 1px #565656; }
+.answer-letter { border-radius: 50%; width: 26px; height: 26px; background: #fff; border-color: #d3d3d3; color: #666; }
+.answer-option.selected .answer-letter { background: #393939; border-color: #393939; }
+.answer-option.correct { background: #f1fbef; border-color: #2a8b37; color: #24532b; box-shadow: none; }
+.answer-option.incorrect { background: #fff7f7; border-color: #c84949; color: #8f2a2a; box-shadow: none; }
+.answer-option.correct .answer-letter { background: #227530; color: #fff; border-color: #227530; }
+.answer-option.incorrect .answer-letter { background: #bd3c3c; color: #fff; border-color: #bd3c3c; }
+.confidence-panel { border-color: #e7e7e7; background: #fff; }
+.confidence-panel .chip { border-color: #ddd; color: #666; background: white; }
+.confidence-panel .chip[aria-pressed="true"] { border-color: #666; background: #f4f4f4; color: #222; }
+.hint-box { border-color: #e9e1b6; background: #fffceb; color: #5d542d; }
+.hint-box strong { color: #5d542d; }
+.feedback { border: 0; border-radius: 9px; padding: 22px; }
+.feedback.correct { background: #eafaE5; color: #255c28; }
+.feedback.incorrect { background: #f4f4f4; color: #444; }
+.question-actions {
+  position: sticky; bottom: 0; z-index: 8; min-height: 90px; margin: 25px -20px 0;
+  padding: 18px 20px; background: #f7f7f7; border-top: 1px solid #e7e7e7;
+}
+.question-actions > .btn-primary { min-width: 150px; margin-left: auto; }
+.question-actions.is-correct { background: #eafae5; border-top-color: #deefd7; }
+.question-actions.is-correct > .btn-primary { background: #207c30; }
+.question-actions.is-correct > .btn-primary:hover { background: #176025; }
+.assessment-note { position: static; padding: 22px; margin-top: 28px; border: 1px solid #e8e8e8; border-radius: 12px; background: #fff; }
+.assessment-note h3 { display: inline; margin-left: 10px; font-size: 15px; }
+.assessment-note .topic-icon { display: inline-grid; width: 34px; height: 34px; vertical-align: middle; }
+.assessment-note p { color: #777; font-size: 12px; }
+.assessment-note .source-note { margin-top: 12px; }
+.chapter-quality { background: #fcfcfc; }
+.evidence-item { border-color: #e6e6e6; }
+.modal { border-radius: 16px; }
+.modal .btn-secondary { border-radius: 10px; }
+
+@media (max-width: 1200px) {
+  .main { margin-left: 0; }
+  .topbar-inner { gap: 24px; }
+  .desktop-nav { gap: 13px; }
+  .topbar-actions { gap: 5px; }
+  .page-content { padding-left: 28px; padding-right: 28px; }
+  .course-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .continue-card { grid-template-columns: minmax(0, 1fr) 155px; padding: 28px; }
+}
+@media (max-width: 1000px) {
+  .topbar-inner { gap: 16px; }
+  .desktop-nav { gap: 10px; }
+  .desktop-nav .nav-icon { display: none; }
+  .topbar .study-timer { display: none; }
+  .dashboard-grid { grid-template-columns: minmax(0, 1fr) 280px; }
+  .continue-card { grid-template-columns: 1fr; }
+  .continue-art { display: none; }
+  .course-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .topbar { padding: 0 16px; min-height: 64px; }
+  .topbar-inner { min-height: 64px; gap: 12px; }
+  .topbar .brand { font-size: 22px; }
+  .topbar-actions { gap: 1px; }
+  .desktop-nav, .desktop-more { display: none; }
+  .topbar .brand-tsa { font-size: 11px; }
+  .main { margin-left: 0; }
+  .page-content { padding: 26px 20px 100px; }
+  .page-header { margin-bottom: 22px; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .continue-card { grid-template-columns: minmax(0, 1fr) 120px; padding: 24px; }
+  .continue-art { display: grid; }
+  .continue-copy h2 { font-size: 25px; }
+  .course-grid, .recommended-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  .recommended-grid .course-thumbnail { aspect-ratio: 1.2; }
+  .course-group-heading { gap: 12px; }
+  .course-group-heading h2 { font-size: 18px; }
+  .course-count { display: none; }
+  .lesson-aside { grid-template-columns: 1fr; }
+  .lesson-step { padding: 22px; }
+  .question-card { padding: 10px 0 0; }
+  .question-options { grid-template-columns: 1fr; }
+  .question-actions { position: static; margin: 20px 0 0; padding: 18px 14px; }
+  .question-actions > .btn-primary { min-width: 120px; }
+  .assessment-note h3 { display: block; margin: 10px 0 0; }
+  .mobile-nav { background: #fff; border-top-color: #e2e2e2; }
+  .mobile-nav .nav-item { color: #777; border-radius: 8px; }
+  .mobile-nav .nav-item.active { color: #222; background: #f2f2f2; }
+}
+@media (max-width: 420px) {
+  .topbar { padding: 0 12px; }
+  .topbar-inner { gap: 7px; }
+  .topbar .brand { font-size: 20px; gap: 4px; }
+  .topbar .brand-mark { width: 28px; }
+  .topbar-actions .icon-btn { min-width: 40px; padding: 8px; }
+  .avatar { width: 32px; height: 32px; }
+  .page-content { padding-left: 16px; padding-right: 16px; }
+  .continue-card { grid-template-columns: 1fr; }
+  .continue-art { display: none; }
+  .course-grid, .recommended-grid { gap: 22px 12px; }
+  .topic-card h3 { font-size: 13px; }
+}
+@media print {
+  .topbar, .mobile-nav { display: none !important; }
+  .main { margin: 0; }
+  .page-content { max-width: none; padding: 0; }
+  .question-actions { position: static; }
+}
+
+/* PC lesson frame: compact heading and viewport-wide action/feedback bar. */
+@media (min-width: 901px) {
+  [data-page="assessment"] .page-content { max-width: 900px; padding-top: 24px; padding-bottom: 150px; }
+  [data-page="assessment"] .page-header { margin-bottom: 16px; gap: 8px; }
+  [data-page="assessment"] .page-header .eyebrow { display: none; }
+  [data-page="assessment"] .page-header h1 { margin: 0; font-size: 18px; }
+  [data-page="assessment"] .page-header p { font-size: 11px; margin-top: 5px; }
+  [data-page="assessment"] .quiz-header { margin-bottom: 12px; }
+  [data-page="assessment"] .question-actions {
+    position: fixed; z-index: 45; bottom: 0; left: 0; right: 0;
+    width: 100%; min-height: 86px; margin: 0;
+    padding: 18px max(24px, calc((100vw - 800px) / 2));
+    border-radius: 0; box-shadow: 0 -1px 0 #e7e7e7;
+    display: flex; flex-wrap: nowrap; align-items: center; gap: 18px;
+  }
+  [data-page="assessment"] .feedback { margin: 0; padding: 0; border: 0; background: transparent; }
+  [data-page="assessment"] .answer-state { font-size: 15px; margin: 0 auto 0 0; white-space: nowrap; }
+  [data-page="assessment"] .answer-state svg { width: 20px; height: 20px; }
+  [data-page="assessment"] .answer-explanation { margin: 0; }
+  [data-page="assessment"] .answer-explanation > summary { white-space: nowrap; font-size: 12px; padding: 9px 16px; }
+  [data-page="assessment"] .answer-explanation[open] > summary { margin-bottom: 0; }
+  [data-page="assessment"] .answer-explanation-body {
+    position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+    width: min(800px, calc(100vw - 48px)); max-height: 48dvh; overflow-y: auto;
+    padding: 24px 28px; border: 1px solid #dadada; border-radius: 12px;
+    background: #fff; color: #262626; box-shadow: 0 6px 32px #00000018;
+  }
+  [data-page="assessment"] .question-actions > .btn-primary { margin-left: 0; flex-shrink: 0; }
+  [data-page="assessment"] .assessment-note { margin-top: 24px; }
+}
+@media print {
+  .question-actions { display: none !important; }
+}
 </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Đến nội dung chính</a>
-  <div id="app"><main class="loading-screen" aria-live="polite"><strong>Mầm TSA</strong><p>Đang chuẩn bị góc học tập của bạn…</p></main></div>
+  <div id="app"><main class="loading-screen" aria-live="polite"><strong>stem</strong><p>Đang chuẩn bị góc học tập của bạn…</p></main></div>
   <div id="modal-root"></div>
   <div id="toast-root" role="status" aria-live="polite"></div>
   <noscript>Bạn cần bật JavaScript để dùng bài học tương tác và lưu tiến độ.</noscript>
@@ -2086,7 +2413,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
     return String(q.topicId) + ":content:" + hash.toString(16);
   }
   function validateImport(input) {
-    if (!obj(input) || input.version !== VERSION || !obj(input.profile) || !Array.isArray(input.attempts) || !Array.isArray(input.notes) || !Array.isArray(input.completedLessons)) throw new Error("Tệp không phải bản sao lưu Mầm TSA phiên bản 1.");
+    if (!obj(input) || input.version !== VERSION || !obj(input.profile) || !Array.isArray(input.attempts) || !Array.isArray(input.notes) || !Array.isArray(input.completedLessons)) throw new Error("Tệp không phải bản sao lưu stem phiên bản 1.");
     const r = defaultState(), minutes = Number(input.profile.dailyMinutes), month = input.profile.targetMonth;
     if (!Number.isFinite(minutes) || minutes < 15 || minutes > 480) throw new Error("Thời gian học phải từ 15 đến 480 phút/ngày.");
     if (typeof month !== "string" || !/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) throw new Error("Tháng mục tiêu không hợp lệ.");
@@ -2511,32 +2838,63 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
   var empty = (heading, body, more = "") => `<div class="empty-state">${icon("sprout")}<h3>${h(heading)}</h3><p>${h(body)}</p>${more}</div>`;
   var pageHead = (eyebrow, title, description, more = "") => `<header class="page-header"><div><span class="eyebrow">${h(eyebrow)}</span><h1>${h(title)}</h1>${description ? `<p>${h(description)}</p>` : ""}</div>${more}</header>`;
   function heroArt() {
-    return `<svg viewBox="0 0 300 280" role="img" aria-label="Mầm cây vươn lên từ những viên gạch kiến thức"><defs><linearGradient id="heroLeaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9ffc0"/><stop offset="1" stop-color="#a9d86f"/></linearGradient></defs><circle cx="154" cy="132" r="101" fill="none" stroke="#90b48c" stroke-opacity=".28"/><circle cx="154" cy="132" r="78" fill="none" stroke="#90b48c" stroke-opacity=".18" stroke-dasharray="3 8"/><path d="M43 223 145 247 255 214 153 192z" fill="#123e2b"/><path d="M53 192 146 212 146 237 53 216z" fill="#ead7c7"/><path d="m146 212 95-29v25l-95 29z" fill="#bdb0d4"/><path d="m53 192 94-27 94 18-95 29z" fill="#f5e6d8"/><path d="m77 165 78 18v26l-78-18z" fill="#bbd287"/><path d="m155 183 64-22v26l-64 22z" fill="#8fae6b"/><path d="m77 165 65-21 77 17-64 22z" fill="#d7f692"/><path d="M151 173V98" stroke="#d7f692" stroke-width="6" stroke-linecap="round"/><path d="M151 139c-45 0-58-29-56-58 36 0 60 17 56 58" fill="url(#heroLeaf)"/><path d="M153 112c-4-39 17-59 53-59 3 36-13 59-53 59" fill="#d7f692"/><path d="m109 98 42 41m42-70-40 43" stroke="#739d50" stroke-width="1.5" opacity=".65"/><g transform="translate(35 94) rotate(-12)"><rect width="44" height="44" rx="12" fill="#ecdff8"/><path d="M12 22h20M22 12v20" stroke="#746080" stroke-width="2"/></g><g transform="translate(226 126) rotate(10)"><rect width="40" height="40" rx="12" fill="#f2c9a4"/><path d="m12 22 6 6 11-14" stroke="#9e6c46" stroke-width="2" fill="none"/></g><circle cx="222" cy="45" r="5" fill="#f6dfcc"/><circle cx="62" cy="164" r="3" fill="#d7f692"/><path d="M93 34v12m-6-6h12m141 149v10m-5-5h10" stroke="#d7f692" stroke-width="1.5"/><text x="206" y="94" fill="#dcebbd" font-family="Georgia,serif" font-size="19" transform="rotate(13 206 94)">x²</text><text x="50" y="56" fill="#e7def5" font-family="Georgia,serif" font-size="17" transform="rotate(-10 50 56)">a + b</text></svg>`;
+    return `<svg viewBox="0 0 300 280" role="img" aria-label="Cây vươn lên từ những viên gạch kiến thức"><defs><linearGradient id="heroLeaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9ffc0"/><stop offset="1" stop-color="#a9d86f"/></linearGradient></defs><circle cx="154" cy="132" r="101" fill="none" stroke="#90b48c" stroke-opacity=".28"/><circle cx="154" cy="132" r="78" fill="none" stroke="#90b48c" stroke-opacity=".18" stroke-dasharray="3 8"/><path d="M43 223 145 247 255 214 153 192z" fill="#123e2b"/><path d="M53 192 146 212 146 237 53 216z" fill="#ead7c7"/><path d="m146 212 95-29v25l-95 29z" fill="#bdb0d4"/><path d="m53 192 94-27 94 18-95 29z" fill="#f5e6d8"/><path d="m77 165 78 18v26l-78-18z" fill="#bbd287"/><path d="m155 183 64-22v26l-64 22z" fill="#8fae6b"/><path d="m77 165 65-21 77 17-64 22z" fill="#d7f692"/><path d="M151 173V98" stroke="#d7f692" stroke-width="6" stroke-linecap="round"/><path d="M151 139c-45 0-58-29-56-58 36 0 60 17 56 58" fill="url(#heroLeaf)"/><path d="M153 112c-4-39 17-59 53-59 3 36-13 59-53 59" fill="#d7f692"/><path d="m109 98 42 41m42-70-40 43" stroke="#739d50" stroke-width="1.5" opacity=".65"/><g transform="translate(35 94) rotate(-12)"><rect width="44" height="44" rx="12" fill="#ecdff8"/><path d="M12 22h20M22 12v20" stroke="#746080" stroke-width="2"/></g><g transform="translate(226 126) rotate(10)"><rect width="40" height="40" rx="12" fill="#f2c9a4"/><path d="m12 22 6 6 11-14" stroke="#9e6c46" stroke-width="2" fill="none"/></g><circle cx="222" cy="45" r="5" fill="#f6dfcc"/><circle cx="62" cy="164" r="3" fill="#d7f692"/><path d="M93 34v12m-6-6h12m141 149v10m-5-5h10" stroke="#d7f692" stroke-width="1.5"/><text x="206" y="94" fill="#dcebbd" font-family="Georgia,serif" font-size="19" transform="rotate(13 206 94)">x²</text><text x="50" y="56" fill="#e7def5" font-family="Georgia,serif" font-size="17" transform="rotate(-10 50 56)">a + b</text></svg>`;
+  }
+  function courseArt(topic) {
+    const palette = { math: ["#3452e8", "#9bb9ff", "#ffe165"], reading: ["#7752d9", "#c5adf6", "#ffdd79"], science: ["#d89b08", "#ffe07d", "#5d80ed"] };
+    const [ink, tint, accent] = palette[topic.domain] || palette.math;
+    const cube = (x, y, size = 26) => `<g transform="translate(${x} ${y})"><path d="m0 10 ${size / 2}-8 ${size / 2} 8-${size / 2} 8z" fill="${tint}"/><path d="m0 10 ${size / 2} 8v${size}-${size / 2}-8z" fill="${ink}"/><path d="m${size / 2} 18 ${size / 2}-8v${size}-${size / 2} 8z" fill="${accent}"/></g>`;
+    const axes = '<path d="M30 22v70h82m-5-4 5 4-5 4M26 27l4-5 4 5" fill="none" stroke="#66728f" stroke-width="2"/>';
+    const pages = `<path d="M32 24h63v74H32z" fill="${tint}"/><rect x="42" y="17" width="63" height="74" rx="5" fill="white" stroke="${ink}" stroke-width="2"/><path d="M53 32h39M53 43h39M53 54h31M53 65h39M53 76h24" stroke="${tint}" stroke-width="4"/>`;
+    const artwork = {
+      numbers: `${cube(23, 53)}${cube(54, 38)}${cube(85, 23)}<path d="M22 100h97" stroke="${ink}" stroke-width="2"/><path d="M32 96v8m32-8v8m32-8v8" stroke="${ink}" stroke-width="2"/>`,
+      fractions: `<circle cx="70" cy="58" r="35" fill="${tint}"/><path d="M70 23a35 35 0 0 1 35 35H70z" fill="${accent}"/><path d="M70 58h35a35 35 0 0 1-70 0z" fill="${ink}"/><path d="M70 23v70M35 58h70" stroke="white" stroke-width="3"/><path d="m105 18 10 10-10 10" fill="none" stroke="${ink}" stroke-width="2"/>`,
+      percent: `<g transform="translate(30 20) rotate(-8 40 40)">${Array.from({ length: 100 }, (_, i) => `<rect x="${i % 10 * 8}" y="${Math.floor(i / 10) * 8}" width="6.5" height="6.5" rx=".8" fill="${i < 25 ? accent : ink}"/>`).join("")}</g>`,
+      algebra: `<path d="M70 22v74M49 98h42M27 40h86" stroke="${ink}" stroke-width="4" stroke-linecap="round"/><circle cx="70" cy="40" r="6" fill="${accent}"/><path d="m37 41-16 30h32zm66 0L87 71h32z" fill="${tint}" stroke="${ink}" stroke-width="1.5"/><rect x="28" y="52" width="18" height="16" rx="2" fill="${ink}"/><text x="37" y="64" text-anchor="middle" fill="white" font-family="Georgia,serif" font-size="15">x</text><circle cx="103" cy="61" r="8" fill="${accent}"/>`,
+      linear: `<path d="M35 28h74v64H35z" fill="${tint}" opacity=".35"/>${axes}<path d="M42 78 98 30" stroke="${ink}" stroke-width="5"/><path d="M59 64h30V39" fill="none" stroke="${accent}" stroke-width="4"/><circle cx="59" cy="64" r="5" fill="${ink}"/><circle cx="89" cy="39" r="5" fill="${ink}"/>`,
+      quadratic: `<rect x="28" y="24" width="84" height="70" rx="5" fill="${tint}" opacity=".35"/><path d="M30 75h80M70 23v74" stroke="${ink}" stroke-width="1.5"/><path d="M39 31Q70 131 101 31" fill="none" stroke="${ink}" stroke-width="5"/><circle cx="70" cy="81" r="5" fill="${accent}"/><text x="91" y="48" fill="${ink}" font-family="Georgia,serif" font-size="20">x²</text>`,
+      functions: `<path d="m43 37 27-14 29 14-29 15z" fill="${tint}"/><path d="m43 37 27 15v39L43 77z" fill="${ink}"/><path d="m70 52 29-15v40L70 91z" fill="${tint}"/><path d="M16 65h25m-6-6 6 6-6 6m67-6h24m-6-6 6 6-6 6" fill="none" stroke="${accent}" stroke-width="4"/><text x="66" y="72" text-anchor="middle" fill="white" font-family="Georgia,serif" font-size="20">f</text>`,
+      geometry: `<path d="m22 79 27-48 28 48z" fill="${ink}"/><rect x="72" y="35" width="37" height="37" transform="rotate(16 90 54)" fill="${tint}" stroke="white" stroke-width="2"/><circle cx="91" cy="83" r="18" fill="${accent}"/><path d="M39 49 28 70" stroke="white" stroke-width="2"/>`,
+      trigonometry: `<path d="M27 90h86L27 26z" fill="${tint}" opacity=".4"/><path d="M27 90h86L27 26z" fill="none" stroke="${ink}" stroke-width="3"/><path d="M27 77h13v13" fill="none" stroke="${ink}" stroke-width="2"/><path d="M91 90a22 22 0 0 1 5-13" fill="none" stroke="${accent}" stroke-width="5"/><text x="72" y="80" fill="${ink}" font-family="Georgia,serif" font-size="18">θ</text>`,
+      exponents: `<path d="M25 93V75h22V56h22V36h22V18h23v75z" fill="${tint}"/><path d="M25 93V75h22V56h22V36h22V18h23" fill="none" stroke="${ink}" stroke-width="4"/><path d="m34 54 23-22 18-6" stroke="${accent}" stroke-width="4" fill="none"/><text x="87" y="78" fill="${ink}" font-family="Georgia,serif" font-size="29">2ⁿ</text>`,
+      probability: `<g transform="rotate(-13 62 57)"><rect x="28" y="26" width="65" height="65" rx="13" fill="${ink}"/><rect x="35" y="20" width="65" height="65" rx="13" fill="${tint}" stroke="white" stroke-width="2"/>${[[49, 34], [84, 34], [66, 52], [49, 70], [84, 70]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${ink}"/>`).join("")}</g><circle cx="111" cy="81" r="13" fill="${accent}"/><circle cx="111" cy="81" r="8" fill="none" stroke="white" stroke-width="2"/>`,
+      statistics: `${axes}<path d="M42 87V59h16v28z" fill="${tint}"/><path d="M66 87V33h16v54z" fill="${ink}"/><path d="M90 87V46h16v41z" fill="${accent}"/><path d="M35 50h77" stroke="${ink}" stroke-width="1.5" stroke-dasharray="4 4"/>`,
+      "reading-evidence": `${pages}<path d="M52 52h39" stroke="${accent}" stroke-width="9" opacity=".75"/><circle cx="100" cy="74" r="16" fill="white" fill-opacity=".75" stroke="${ink}" stroke-width="4"/><path d="m111 86 12 13" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>`,
+      "reading-inference": `<rect x="20" y="26" width="39" height="48" rx="5" fill="${tint}"/><path d="M29 39h21M29 49h21M29 59h15" stroke="white" stroke-width="3"/><path d="M62 52h20m-6-6 6 6-6 6" fill="none" stroke="${ink}" stroke-width="3"/><path d="M89 31h27v45H89z" fill="${ink}"/><path d="m94 54 6 6 12-16" fill="none" stroke="${accent}" stroke-width="4"/><path d="M41 81v11h63V81" fill="none" stroke="${tint}" stroke-width="3"/>`,
+      "reading-structure": `<rect x="51" y="17" width="39" height="25" rx="5" fill="${ink}"/><path d="M70 42v17M29 71V59h82v12" stroke="${ink}" stroke-width="3" fill="none"/><rect x="13" y="71" width="33" height="26" rx="5" fill="${tint}"/><rect x="54" y="71" width="33" height="26" rx="5" fill="${accent}"/><rect x="95" y="71" width="33" height="26" rx="5" fill="${tint}"/><path d="M70 59v12" stroke="${ink}" stroke-width="3"/>`,
+      units: `<g transform="rotate(-31 70 60)"><rect x="22" y="42" width="97" height="35" rx="4" fill="${tint}" stroke="${ink}" stroke-width="2"/>${Array.from({ length: 10 }, (_, i) => `<path d="M${30 + i * 9} 43v${i % 3 === 0 ? 17 : 10}" stroke="${ink}" stroke-width="2"/>`).join("")}</g><circle cx="106" cy="88" r="10" fill="${accent}"/>`,
+      motion: `<path d="M21 84h100M23 92h72" stroke="${tint}" stroke-width="3" stroke-linecap="round"/><path d="m46 70 16-25h39l13 25z" fill="${ink}"/><path d="m65 49-9 15h39l-3-15z" fill="${tint}"/><circle cx="60" cy="73" r="10" fill="${accent}"/><circle cx="102" cy="73" r="10" fill="${accent}"/><path d="M20 52h24M29 62h13M29 31h57m-9-7 9 7-9 7" fill="none" stroke="${accent}" stroke-width="3"/>`,
+      forces: `<rect x="52" y="39" width="38" height="44" rx="4" fill="${tint}"/><path d="M18 61h33m-11-9 11 9-11 9M91 61h33m-11-9 11 9-11 9" fill="none" stroke="${accent}" stroke-width="5"/><path d="M71 39V16m-7 10 7-10 7 10" fill="none" stroke="${ink}" stroke-width="4"/><path d="M49 91h45" stroke="${ink}" stroke-width="3"/>`,
+      energy: `<circle cx="70" cy="58" r="38" fill="${tint}" opacity=".6"/><path d="m78 19-33 45h23l-5 36 34-48H74z" fill="${accent}" stroke="white" stroke-width="2"/><path d="M29 32a47 47 0 0 0 0 53m82 0a47 47 0 0 0 0-53" stroke="${ink}" stroke-width="2" fill="none"/>`,
+      chemistry: `<path d="m70 59-28-23m28 23 32-31M70 59l27 30M70 59 35 83" stroke="${ink}" stroke-width="7"/><circle cx="70" cy="59" r="19" fill="${accent}"/><circle cx="40" cy="34" r="14" fill="${tint}"/><circle cx="104" cy="26" r="13" fill="${ink}"/><circle cx="100" cy="91" r="15" fill="${tint}"/><circle cx="32" cy="86" r="12" fill="${ink}"/><circle cx="65" cy="52" r="5" fill="white" opacity=".65"/>`,
+      experiment: `<path d="M38 23h22m-18 0v26L25 84q-4 11 8 11h33q12 0 8-11L57 49V23" fill="${tint}" fill-opacity=".5" stroke="${ink}" stroke-width="2.5"/><path d="M34 70h31l10 20H24z" fill="${accent}"/><path d="M88 24h24m-20 0v61q0 16 16 0V24" fill="${tint}" fill-opacity=".5" stroke="${ink}" stroke-width="2.5"/><path d="M94 62h12v22q-6 16-12 0z" fill="${accent}"/><circle cx="46" cy="79" r="4" fill="white"/><circle cx="55" cy="61" r="3" fill="${accent}"/>`
+    };
+    return `<svg class="course-art" viewBox="0 0 140 120" aria-hidden="true"><ellipse cx="70" cy="105" rx="43" ry="5" fill="#eceef3"/>${artwork[topic.id] || pages}</svg>`;
   }
   function topicCard(topic, state2, compact = false) {
-    const e = topicEvidence(state2, topic.id);
-    return `<article class="topic-card" data-color="${h(topic.color)}"><div class="row between"><span class="topic-icon ${h(topic.color)}">${icon(topic.icon)}</span>${domainTag(topic)}</div><div><h3>${h(topic.title)}</h3><p style="margin-top:7px">${h(topic.subtitle)}</p></div><div class="topic-meta"><span>${icon("clock")} ${h(topic.minutes)} phút</span><span>·</span><span>${topic.level === 0 ? "Bắt đầu từ nền tảng" : topic.level === 1 ? "Xây tiếp kiến thức" : "Kết nối & vận dụng"}</span></div>${e.attempts ? `<div><div class="progress-track" aria-label="Ước lượng mức nắm kiến thức ${e.score}%"><div class="progress-fill" style="width:${e.score}%"></div></div><small class="muted">${h(e.label)} · ${e.independent} lần tự làm đúng</small></div>` : compact ? "" : '<small class="muted">Chưa có bài làm · Học theo nhịp của bạn</small>'}<div class="topic-footer">${link("learn/" + topic.id, `Khám phá ${icon("arrow")}`, "btn btn-ghost")}${e.isDue ? '<span class="tag">Đến lúc ôn</span>' : ""}</div></article>`;
+    const e = topicEvidence(state2, topic.id), q = chapterQuality(state2, topic);
+    return `<article class="topic-card" data-color="${h(topic.color)}"><a class="course-open" href="#learn/${h(topic.id)}" aria-label="Mở bài ${h(topic.title)}"><div class="course-thumbnail">${courseArt(topic)}${e.isDue ? '<span class="course-badge">Đến lúc ôn</span>' : q.read ? '<span class="course-badge read">Đã đọc</span>' : ""}</div><h3>${h(topic.title)}</h3></a><p class="course-description">${h(topic.subtitle)}</p><div class="topic-meta"><span>${icon("clock")} ${h(topic.minutes)} phút</span><span>${topic.level === 0 ? "Nền tảng" : topic.level === 1 ? "Kết nối" : "Vận dụng"}</span></div>${e.attempts ? `<small class="course-evidence">${e.independent} câu mới tự làm đúng · ${h(q.label)}</small>` : '<small class="course-evidence">Chưa có bài làm</small>'}<div class="topic-footer">${link("learn/" + topic.id, `Khám phá ${icon("arrow")}`, "btn btn-ghost")}</div></article>`;
   }
   function shell(state2, ui2, body) {
     const route2 = ui2.route || "today", first = route2.split("/")[0], active = first === "learn" ? "roadmap" : first === "assessment" || first === "results" ? "assess" : first;
-    const nav = [["today", "home", "Hôm nay"], ["roadmap", "map", "Lộ trình học"], ["assess", "target", "Kiểm tra hiểu"], ["progress", "chart", "Tiến bộ"], ["notebook", "notebook", "Sổ tay của mình"], ["tutor", "chat", "Bạn đồng hành"]];
+    const secondary = { notebook: "Sổ tay của mình", tutor: "Bạn đồng hành", settings: "Cài đặt & dữ liệu" };
+    const focus = ["learn", "assessment"].includes(first), nav = [["today", "home", "Hôm nay"], ["roadmap", "book", "Khóa học"], ["assess", "target", "Kiểm tra"], ["progress", "chart", "Tiến bộ"]];
     const navItem = ([to, ic, label]) => `<a class="nav-item ${active === to ? "active" : ""}" href="#${to}" ${active === to ? 'aria-current="page"' : ""}><span class="nav-icon">${icon(ic)}</span><span>${label}</span></a>`;
     const name = state2.profile.name || "Bạn", initial = name.trim().charAt(0).toUpperCase() || "M";
-    return `<a class="skip-link" href="#main-content">Đi đến nội dung chính</a><div class="app-shell"><aside class="sidebar" aria-label="Điều hướng chính"><a class="brand" href="#today"><span class="brand-mark">${icon("sprout")}</span><span>Mầm<small>Mỗi ngày, hiểu hơn</small></span></a><div class="nav-label">Không gian học tập</div><nav>${nav.map(navItem).join("")}</nav><div class="sidebar-bottom"><div class="sidebar-note">${icon("leaf")}<strong>Từ một chút hiểu,<br>đến một bước tiến.</strong><p>Mục tiêu TSA 90+<br>Hướng tới tháng ${h(state2.profile.targetMonth.slice(5))}/${h(state2.profile.targetMonth.slice(0, 4))}</p></div>${navItem(["settings", "settings", "Cài đặt & dữ liệu"])}<div class="sidebar-footer">Một hành trình của riêng bạn.</div></div></aside><main class="main" id="main-content" tabindex="-1"><div class="topbar"><a class="brand" href="#today"><span class="brand-mark">${icon("sprout")}</span><span>Mầm</span></a><div class="topbar-title">Không cần biết trước. <strong>Mình bắt đầu từ đây.</strong></div><div class="topbar-actions"><span class="study-timer" aria-label="Đồng hồ tập trung">${icon("clock")}<span data-focus-timer>${time(n(ui2.timer?.remaining) || 2700)}</span></span>${action("timer-toggle", icon(ui2.timer?.running ? "pause" : "play"), `aria-label="${ui2.timer?.running ? "Tạm dừng" : "Bắt đầu"} đồng hồ tập trung"`, "icon-btn")}${action("search", icon("search"), 'aria-label="Tìm bài học"', "icon-btn")}<a href="#settings" class="avatar" aria-label="Hồ sơ ${h(name)}">${h(initial)}</a></div></div><div class="page-content">${ui2.warning ? `<div class="error-banner" role="status">${h(ui2.warning)}${ui2.storageConflict ? `<div class="row" style="margin-top:12px">${action("export", "Xuất bản đang mở", "", "btn btn-secondary")}${action("reload-latest", "Tải lại tiến độ mới nhất", "", "btn btn-primary")}</div>` : ""}</div>` : ""}${body}<footer class="page-footer"><span>${icon("sprout")} Học để hiểu. Tiến bộ từng ngày.</span>${action("sources", "Tài liệu & cách học", "", "btn btn-ghost")}</footer></div></main><nav class="mobile-nav" aria-label="Điều hướng điện thoại">${[["today", "home", "Hôm nay"], ["roadmap", "map", "Lộ trình"], ["assess", "target", "Kiểm tra"], ["progress", "chart", "Tiến bộ"]].map(navItem).join("")}${action("mobile-more", `<span class="nav-icon">${icon("more")}</span><span>Thêm</span>`, 'aria-label="Mở thêm điều hướng"', "nav-item")}</nav></div>`;
+    return `<a class="skip-link" href="#main-content">Đi đến nội dung chính</a><div class="app-shell ${focus ? "focus-mode" : ""}" data-page="${h(first)}"><header class="topbar"><div class="topbar-inner"><a class="brand" href="#today" aria-label="stem · Hôm nay"><span class="brand-mark">${icon("sprout")}</span><span>stem</span></a><nav class="desktop-nav" aria-label="Điều hướng chính">${nav.map(navItem).join("")}</nav>${focus ? `<span class="focus-caption">${first === "assessment" ? "Tự thử. Hiểu sâu hơn." : "Từng ý nhỏ. Từng bước hiểu."}</span>` : ""}<div class="topbar-actions"><span class="study-timer" aria-label="Đồng hồ tập trung">${icon("clock")}<span data-focus-timer>${time(n(ui2.timer?.remaining) || 2700)}</span></span>${action("timer-toggle", icon(ui2.timer?.running ? "pause" : "play"), `aria-label="${ui2.timer?.running ? "Tạm dừng" : "Bắt đầu"} đồng hồ tập trung"`, "icon-btn")}${action("search", icon("search"), 'aria-label="Tìm bài học"', "icon-btn")}${action("mobile-more", icon("more"), 'aria-label="Mở thêm điều hướng"', "icon-btn desktop-more")}<a href="#settings" class="avatar" aria-label="Hồ sơ ${h(name)}">${h(initial)}</a></div></div></header><main class="main" id="main-content" tabindex="-1"><div class="page-content">${secondary[active] ? `<a class="current-section" href="#${h(active)}" aria-current="page">${h(secondary[active])}</a>` : ""}${ui2.warning ? `<div class="error-banner" role="status">${h(ui2.warning)}${ui2.storageConflict ? `<div class="row" style="margin-top:12px">${action("export", "Xuất bản đang mở", "", "btn btn-secondary")}${action("reload-latest", "Tải lại tiến độ mới nhất", "", "btn btn-primary")}</div>` : ""}</div>` : ""}${body}<footer class="page-footer"><span>${icon("sprout")} Mỗi ngày, hiểu hơn.</span>${action("sources", "Tài liệu & cách học", "", "btn btn-ghost")}</footer></div></main><nav class="mobile-nav" aria-label="Điều hướng điện thoại">${nav.map(navItem).join("")}${action("mobile-more", `<span class="nav-icon">${icon("more")}</span><span>Thêm</span>`, 'aria-label="Mở thêm điều hướng"', "nav-item")}</nav></div>`;
   }
   function today(state2, ui2) {
     const rec = recommendTopics(state2, topics), minutes = Math.floor(n(state2.studySeconds[todayKey()]) / 60), plan = studyPlan(state2.profile.dailyMinutes), answered = state2.attempts.filter((a) => !a.unknown), independent = state2.attempts.filter((a) => a.independent).length, due = topics.filter((t) => topicEvidence(state2, t.id).isDue);
-    const next = rec[0], greeting = state2.profile.name ? `Chào ${state2.profile.name},` : "Chào bạn,";
-    return `${pageHead("Hôm nay là một khởi đầu tốt", greeting + " mình cùng học nhé.", "Một chút tập trung, một điều hiểu rõ hơn. Không cần vội, chỉ cần bước tiếp.", `<span class="chip">${icon("calendar")} ${formatDate(/* @__PURE__ */ new Date())}</span>`)}<section class="dashboard-grid"><div class="hero-card"><div class="hero-copy"><span class="eyebrow">Hành trình TSA · Mục tiêu 90+</span><h2 class="hero-title">Kiến thức lớn,<br>bắt đầu từ<br><em>những mầm nhỏ.</em></h2><p>Hiểu vì sao, tự mình thử, rồi kết nối từng điều đã học. Mầm đi cùng bạn từ những viên gạch đầu tiên.</p><div class="hero-actions">${link(next ? "learn/" + next.id : "roadmap", `Bắt đầu học ${icon("arrow")}`, "btn btn-primary")}${link("assess", "Tìm điểm bắt đầu", "btn btn-ghost")}</div></div><div class="hero-art">${heroArt()}</div></div><aside class="daily-card"><div><span class="eyebrow">Nhịp học của bạn</span><h3 style="margin-top:6px">Hôm nay, từng bước một</h3></div><div class="daily-plan">${plan.map((s, i) => `<div class="daily-plan-item"><span class="nav-icon">${icon(i === 0 ? "book" : i === 1 ? "target" : "refresh")}</span><div><p>${["Hiểu một điều mới", "Tự thử & giải thích", "Ôn lại điều đã học"][i]}</p><small>${s.focus} phút tập trung · ${s.rest} phút nghỉ</small></div></div>`).join("")}</div><div class="daily-summary"><span class="topic-icon green">${icon("clock")}</span><div><strong><span data-study-minutes>${minutes}</span> <small>/ ${studyPlan(state2.profile.dailyMinutes).reduce((sum, p) => sum + p.focus, 0)} phút</small></strong><small class="muted">Tập trung hôm nay · lịch ${h(state2.profile.dailyMinutes)} phút gồm nghỉ</small></div></div>${link("roadmap", "Xem lộ trình của mình", "btn btn-secondary")}</aside></section><section class="metric-grid" style="margin-top:20px" aria-label="Tiến độ thực tế"><div class="stat-card"><span class="stat-icon">${icon("leaf")}</span><div><strong>${learningStreak(state2)} <small>ngày</small></strong><p>Nhịp học liên tiếp</p></div></div><div class="stat-card"><span class="stat-icon peach">${icon("checkCircle")}</span><div><strong>${independent}</strong><p>Câu tự làm đúng</p></div></div><div class="stat-card"><span class="stat-icon purple">${icon("book")}</span><div><strong>${state2.completedLessons.length}<small> / ${topics.length}</small></strong><p>Bài đã đi qua</p></div></div></section>${qualityFollowUp(state2)}<div class="section-heading"><div><span class="eyebrow">Bước tiếp vừa sức</span><h2 style="margin-top:4px">Dành cho bạn hôm nay</h2><p>${answered.length ? "Gợi ý dựa trên bài làm và các nền tảng cần củng cố." : "Chưa có dữ liệu đánh giá. Mình bắt đầu từ những nền tảng dễ tiếp cận."}</p></div>${link("roadmap", `Tất cả bài học ${icon("arrow")}`, "btn btn-ghost")}</div><section class="topic-grid">${rec.slice(0, 3).map((t) => topicCard(t, state2, true)).join("")}</section><section class="focus-card" style="margin-top:24px"><div><span class="eyebrow">Học sâu, nhớ lâu</span><h3 style="margin-top:6px">${due.length ? `${due.length} chủ đề đang chờ bạn ôn lại` : "Đúng một câu chưa có nghĩa là đã hiểu"}</h3><p>${due.length ? "Thử lại sau một khoảng nghỉ giúp mình nhận ra điều còn nhớ và chỗ cần học thêm." : "Mầm ghi riêng bài có gợi ý, bài tự làm và lần nhớ lại. Bạn sẽ nhìn thấy tiến bộ từ bằng chứng của chính mình."}</p></div>${due.length ? action("start-assessment", `Ôn lại ${icon("refresh")}`, 'data-mode="review"') : link("progress", "Hiểu cách theo dõi", "btn btn-secondary")}</section>`;
+    const next = rec[0], greeting = state2.profile.name ? `Chào ${state2.profile.name},` : "Chào bạn,", focusMinutes = plan.reduce((sum, p) => sum + p.focus, 0);
+    return `${pageHead("Mỗi ngày, hiểu hơn", greeting + " mình cùng học nhé.", "Bắt đầu một ý nhỏ. Tự thử lại để biết mình đã hiểu đến đâu.", `<span class="chip">${icon("calendar")} ${formatDate(/* @__PURE__ */ new Date())}</span>`)}<section class="dashboard-grid"><div class="continue-card"><div class="continue-copy"><span class="eyebrow">Bước học tiếp theo</span><h2>${next ? h(next.title) : "Chọn một điều để khám phá"}</h2><p>${next ? h(next.why) : "Cùng bắt đầu từ những nền tảng đầu tiên."}</p><div class="hero-actions">${link(next ? "learn/" + next.id : "roadmap", `${answered.length ? "Tiếp tục học" : "Bắt đầu học"} ${icon("arrow")}`, "btn btn-primary")}${link("assess", "Tìm điểm bắt đầu", "btn btn-ghost")}</div><span class="continue-meta">${icon("clock")} ${next ? h(next.minutes) + " phút · " : ""}Học theo nhịp của bạn</span></div><div class="continue-art">${next ? courseArt(next) : heroArt()}</div></div><aside class="daily-card"><div class="row between"><h3>Mục tiêu mỗi ngày</h3><a class="icon-btn" href="#settings" aria-label="Chỉnh mục tiêu học">${icon("settings")}</a></div><div class="daily-summary"><strong><span data-study-minutes>${minutes}</span><small> / ${focusMinutes} phút</small></strong><span class="muted text-small">tập trung</span></div><div class="progress-track" aria-label="${minutes} trên ${focusMinutes} phút tập trung"><div class="progress-fill" style="width:${Math.min(100, minutes / Math.max(1, focusMinutes) * 100)}%"></div></div><div class="daily-plan">${plan.map((s, i) => `<div class="daily-plan-item"><span class="daily-step">${i + 1}</span><div><p>${["Hiểu một điều mới", "Tự thử & giải thích", "Ôn lại điều đã học"][i]}</p><small>${s.focus} phút học · ${s.rest} phút nghỉ</small></div></div>`).join("")}</div><p class="goal-caption">Mục tiêu TSA 90+ · ${h(state2.profile.targetMonth.slice(5))}/${h(state2.profile.targetMonth.slice(0, 4))}<br>Lịch ${h(state2.profile.dailyMinutes)} phút/ngày, gồm nghỉ.</p></aside></section><section class="metric-grid" style="margin-top:24px" aria-label="Tiến độ thực tế"><div class="stat-card"><span class="stat-icon">${icon("bolt")}</span><div><strong>${learningStreak(state2)} <small>ngày</small></strong><p>Nhịp học liên tiếp</p></div></div><div class="stat-card"><span class="stat-icon peach">${icon("checkCircle")}</span><div><strong>${independent}</strong><p>Câu mới tự làm đúng</p></div></div><div class="stat-card"><span class="stat-icon purple">${icon("book")}</span><div><strong>${state2.completedLessons.length}<small> / ${topics.length}</small></strong><p>Bài đã đọc · cần kiểm tra mức hiểu</p></div></div></section>${qualityFollowUp(state2)}<div class="section-heading"><div><h2>Dành cho bạn hôm nay</h2><p>${answered.length ? "Từ bài làm và các nền tảng cần củng cố." : "Bắt đầu từ những nền tảng dễ tiếp cận."}</p></div>${link("roadmap", `Tất cả khóa học ${icon("arrow")}`, "btn btn-ghost")}</div><section class="topic-grid recommended-grid">${rec.slice(0, 3).map((t) => topicCard(t, state2, true)).join("")}</section><section class="focus-card" style="margin-top:32px"><div><span class="eyebrow">Học sâu, nhớ lâu</span><h3 style="margin-top:6px">${due.length ? `${due.length} chủ đề đến lúc ôn lại` : "Đọc xong là bước đầu. Tự làm mới cho biết mức hiểu."}</h3><p>${due.length ? "Thử lại sau một khoảng nghỉ để tìm điều còn nhớ và chỗ cần học thêm." : "stem ghi riêng bài có gợi ý, bài tự làm và lần nhớ lại. Sau mỗi phần, hãy làm bài kiểm tra ngắn để chọn bước tiếp theo."}</p></div>${due.length ? action("start-assessment", `Ôn lại ${icon("refresh")}`, 'data-mode="review"') : link("progress", "Xem cách theo dõi", "btn btn-secondary")}</section>`;
   }
   function roadmap(state2, ui2) {
-    const filter = ui2.filter || "all";
-    const selected = topics.filter((t) => filter === "all" || t.domain === filter);
-    const groups = [{ level: 0, title: "Gieo nền tảng", text: "Làm quen với con số, cách đọc và quan sát. Không cần biết trước." }, { level: 1, title: "Kết nối những điều đã biết", text: "Thấy mối liên hệ, diễn đạt bằng lời và tự kiểm tra cách hiểu." }, { level: 2, title: "Vận dụng & kiểm tra lại", text: "Đưa kiến thức vào tình huống mới và quay lại củng cố nền." }];
-    return `${pageHead("Đường đi có thể thay đổi", "Lộ trình của riêng bạn", "Bạn có thể mở bất kỳ bài nào. Các nền tảng gợi ý giúp bạn chọn bước vừa sức; đây chưa phải toàn bộ đề cương TSA.")}${filters(filter)}${groups.map((g, i) => {
-      const list = selected.filter((t) => t.level === g.level);
-      return list.length ? `<section class="roadmap-phase"><div class="phase-line"></div><div class="phase-node">0${i + 1}</div><div class="phase-body"><div class="row between"><h2>${g.title}</h2><span class="tag">${list.length} bài học</span></div><p>${g.text}</p><div class="topic-grid">${list.map((t) => topicCard(t, state2)).join("")}</div></div></section>` : "";
-    }).join("")}<div class="source-note">Lộ trình tham khảo phương pháp học từ THCP: tìm bản chất, thử ví dụ nhỏ và soi lại lời giải. Nội dung bài học do ứng dụng tự biên soạn; chưa được chuẩn hóa thành điểm TSA.</div>`;
+    const filter = ui2.filter || "all", selected = topics.filter((t) => filter === "all" || t.domain === filter);
+    const descriptions = { math: "Từ con số đến cách giải quyết vấn đề.", reading: "Đọc kỹ bằng chứng. Kết nối và kiểm tra lập luận.", science: "Hiểu đại lượng, mô hình và cách kiểm tra một giả thuyết." };
+    return `${pageHead("Học qua khám phá", "Khóa học của bạn", "Chọn một bài, hiểu từng ý nhỏ rồi tự kiểm tra. Bạn có thể bắt đầu từ bất kỳ đâu.")}${filters(filter)}<div class="course-catalog">${Object.entries(domains).map(([id, d]) => {
+      const list = selected.filter((t) => t.domain === id);
+      return list.length ? `<section class="course-group" aria-label="${h(d.title)}"><div class="course-group-heading"><span class="domain-art ${h(id)}">${icon(d.icon)}</span><div><h2>${h(d.title)}</h2><p>${h(descriptions[id])}</p></div><span class="course-count">${list.length} bài học</span></div><div class="topic-grid course-grid">${list.map((t) => topicCard(t, state2)).join("")}</div></section>` : "";
+    }).join("")}</div>${weeklyCalendar(state2)}<div class="source-note">Đang có ${topics.length} chủ đề nền tảng; chưa phủ toàn bộ đề cương TSA. Lộ trình tham khảo cách học từ THCP: tìm bản chất, thử ví dụ nhỏ và kiểm tra lại lời giải. Các bài do stem tự biên soạn.</div>`;
   }
   function filters(selected) {
     return `<div class="filter-tabs" role="group" aria-label="Lọc lĩnh vực">${[["all", "Tất cả"], ...Object.entries(domains).map(([id, d]) => [id, d.short])].map(([id, label]) => action("filter", h(label), `data-domain="${id}" aria-pressed="${selected === id}"`, "filter-tab " + (selected === id ? "active" : ""))).join("")}</div>`;
@@ -2551,7 +2909,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
       const value = Math.max(-5, Math.min(5, n(e.number ?? 2)));
       return `<div class="visual-panel"><svg viewBox="0 0 440 115" role="img" aria-label="Trục số từ âm 5 đến 5, đang chọn ${value}"><path d="M20 55H420m-8-5 8 5-8 5" stroke="#859575" fill="none"/>${Array.from({ length: 11 }, (_, i) => `<path d="M${30 + i * 37} 48v14" stroke="#94a586"/><text x="${30 + i * 37}" y="85" text-anchor="middle" fill="#66765c" font-size="12">${i - 5}</text>`).join("")}<circle cx="${30 + (value + 5) * 37}" cy="55" r="11" fill="#195b3b"/><text x="${30 + (value + 5) * 37}" y="28" text-anchor="middle" fill="#195b3b" font-size="16" font-weight="bold">${value}</text></svg><label for="number-slider">Di chuyển trên trục số: <strong>${value}</strong></label><input id="number-slider" type="range" min="-5" max="5" value="${value}"><p>Sang phải là lớn hơn, sang trái là nhỏ hơn. Số âm vẫn là những vị trí xác định trên trục.</p></div>`;
     }
-    if (["graph", "balance"].includes(topic.visual)) {
+    if (["graph", "balance"].includes(topic.visual) && ["linear", "functions", "motion"].includes(topic.id)) {
       const slope = Math.max(-3, Math.min(3, n(e.slope ?? 1)));
       return `<div class="visual-panel"><svg viewBox="0 0 400 235" role="img" aria-label="Đồ thị y bằng ${slope} nhân x"><defs><clipPath id="graph-clip"><rect x="40" y="15" width="320" height="190"/></clipPath></defs>${[40, 80, 120, 160, 200, 240, 280, 320, 360].map((x) => `<path d="M${x} 15v190" stroke="#e1e7d6"/>`).join("")}${[30, 70, 110, 150, 190].map((y) => `<path d="M40 ${y}h320" stroke="#e1e7d6"/>`).join("")}<path d="M40 110h320M200 15v190" stroke="#8b9b7d"/><path d="M40 ${110 + slope * 160} 360 ${110 - slope * 160}" stroke="#195b3b" stroke-width="3" clip-path="url(#graph-clip)"/><circle cx="200" cy="110" r="4" fill="#195b3b"/><text x="365" y="123" fill="#66765c" font-size="12">x</text><text x="209" y="19" fill="#66765c" font-size="12">y</text></svg><label for="slope-slider">Độ dốc a = <strong>${slope}</strong> · y = ax</label><input id="slope-slider" type="range" min="-3" max="3" step="1" value="${slope}"><p>Thay độ dốc. Khi x tăng 1 đơn vị, y thay đổi a đơn vị. Đây là mô hình đường thẳng đơn giản để quan sát.</p></div>`;
     }
@@ -2579,9 +2937,9 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
   }
   function lesson(state2, ui2, id) {
     const topic = getTopic(id);
-    if (!topic) return pageHead("Bài học", "Không tìm thấy bài học", "Bạn có thể quay về lộ trình để chọn một bài đang có.") + link("roadmap", "Về lộ trình");
+    if (!topic) return pageHead("Bài học", "Không tìm thấy bài học", "Bạn có thể quay về lộ trình để chọn một bài đang có.") + link("roadmap", "Về khóa học");
     const e = topicEvidence(state2, id), pre = (topic.prerequisites || []).map(getTopic).filter(Boolean);
-    return `${link("roadmap", `${icon("back")} Về lộ trình`, "btn btn-ghost back-link")}${pageHead(domains[topic.domain]?.title, topic.title, topic.subtitle, `<span class="chip">${icon("clock")} Khoảng ${h(topic.minutes)} phút</span>`)}<div class="lesson-layout"><div class="lesson-main"><section class="lesson-step"><span class="eyebrow">Bắt đầu từ ý nghĩa</span><h2 style="margin-top:8px">Mình học điều này để làm gì?</h2><p>${h(topic.why)}</p></section><section class="lesson-step"><h2><span class="step-number">1</span>Hiểu từng ý nhỏ</h2>${topic.concepts.map((c, i) => `<div class="concept-block"><span class="concept-dot">0${i + 1}</span><p>${h(c)}</p></div>`).join("")}</section>${visual(topic, ui2)}<section class="lesson-step"><h2><span class="step-number">2</span>Thử cùng một ví dụ</h2><p class="example-prompt">${h(topic.example.prompt)}</p><ol class="example-steps">${topic.example.steps.map((s) => `<li>${h(s)}</li>`).join("")}</ol><div class="example-answer">${icon("checkCircle")} <strong>${h(topic.example.answer)}</strong></div></section><section class="lesson-step"><h2><span class="step-number">3</span>Đến lượt bạn tự thử</h2><p>Thử 5 câu ngắn. Nếu bí, mở từng gợi ý hoặc chọn “Mình chưa học”. Mầm ghi riêng lần tự làm và lần có trợ giúp.</p><div class="row" style="margin-top:20px">${action("start-assessment", `Luyện chủ đề này ${icon("arrow")}`, `data-mode="topic" data-topic="${h(id)}"`)}${action("complete-lesson", state2.completedLessons.includes(id) ? "Đọc xong · kiểm tra lại mức hiểu" : "Xong phần này · kiểm tra mức hiểu", `data-topic="${h(id)}"`, "btn btn-secondary")}</div><p class="muted" style="font-size:11px;margin-top:13px">Đọc xong bài là một cột mốc; chưa tự động xác nhận bạn đã thành thạo.</p></section><section class="lesson-step"><h2><span class="step-number">4</span>Nói lại bằng lời của mình</h2><p>${h(topic.reflection)}</p><form data-form="reflection" data-topic="${h(id)}" class="reflection-box"><label class="sr-only" for="reflection-text">Điều bạn hiểu và điều còn băn khoăn</label><textarea class="form-control" id="reflection-text" name="text" required maxlength="10000" placeholder="Mình hiểu rằng… Mình vẫn chưa rõ…"></textarea><button class="btn btn-secondary" style="margin-top:12px" type="submit">Lưu suy nghĩ của mình</button></form></section>${qualityPanel(state2, topic)}<div class="source-note">${h(sourceLabel(topic))}<br>Bài học và ví dụ do Mầm tự biên soạn; tài liệu gốc hỗ trợ phương pháp học.</div></div><aside class="lesson-aside"><div class="card"><span class="eyebrow">Viên gạch trước đó</span><h3 style="margin-top:8px">Nền tảng gợi ý</h3>${pre.length ? `<p style="margin:8px 0 10px">Nếu thấy khó, quay lại một ý dưới đây. Bạn vẫn có thể học tiếp bài này.</p>${pre.map((p) => link("learn/" + p.id, `${h(p.title)} ${icon("arrow")}`, "prerequisite-link")).join("")}` : "<p>Đây là một điểm bắt đầu. Chỉ cần sẵn sàng thử và hỏi lại.</p>"}</div><div class="card"><span class="eyebrow">Bằng chứng của bạn</span><h3 style="margin-top:8px">${h(e.label)}</h3><div class="evidence-list"><div class="evidence-item"><strong>${e.independent} lần tự làm đúng</strong></div><div class="evidence-item"><strong>${e.guided} lần đúng có hỗ trợ</strong></div><div class="evidence-item"><strong>${e.days} ngày có bài tự làm đúng</strong></div></div><p style="margin-top:10px">Đây là ước lượng tại chỗ, chưa phải điểm TSA.</p></div><div class="card"><span class="topic-icon purple">${icon("chat")}</span><h3 style="margin-top:14px">Bí một chỗ? Hỏi từ đó.</h3><p style="margin-top:8px">Nói điều bạn đã thử, mình cùng tìm bước tiếp theo.</p>${link("tutor", "Mở bạn đồng hành", "btn btn-ghost")}</div></aside></div>`;
+    return `${link("roadmap", `${icon("back")} Về khóa học`, "btn btn-ghost back-link")}${pageHead(domains[topic.domain]?.title, topic.title, topic.subtitle, `<span class="chip">${icon("clock")} Khoảng ${h(topic.minutes)} phút</span>`)}<div class="lesson-layout lesson-reading-layout"><div class="lesson-main"><section class="lesson-step"><span class="eyebrow">Bắt đầu từ ý nghĩa</span><h2 style="margin-top:8px">Mình học điều này để làm gì?</h2><p>${h(topic.why)}</p></section><section class="lesson-step"><h2><span class="step-number">1</span>Hiểu từng ý nhỏ</h2>${topic.concepts.map((c, i) => `<div class="concept-block"><span class="concept-dot">0${i + 1}</span><p>${h(c)}</p></div>`).join("")}</section>${visual(topic, ui2)}<section class="lesson-step"><h2><span class="step-number">2</span>Thử cùng một ví dụ</h2><p class="example-prompt">${h(topic.example.prompt)}</p><ol class="example-steps">${topic.example.steps.map((s) => `<li>${h(s)}</li>`).join("")}</ol><div class="example-answer">${icon("checkCircle")} <strong>${h(topic.example.answer)}</strong></div></section><section class="lesson-step"><h2><span class="step-number">3</span>Đến lượt bạn tự thử</h2><p>Thử 5 câu ngắn. Nếu bí, mở từng gợi ý hoặc chọn “Mình chưa học”. stem ghi riêng lần tự làm và lần có trợ giúp.</p><div class="row" style="margin-top:20px">${action("start-assessment", `Luyện chủ đề này ${icon("arrow")}`, `data-mode="topic" data-topic="${h(id)}"`)}${action("complete-lesson", state2.completedLessons.includes(id) ? "Đọc xong · kiểm tra lại mức hiểu" : "Xong phần này · kiểm tra mức hiểu", `data-topic="${h(id)}"`, "btn btn-secondary")}</div><p class="muted" style="font-size:11px;margin-top:13px">Đọc xong bài là một cột mốc; chưa tự động xác nhận bạn đã thành thạo.</p></section><section class="lesson-step"><h2><span class="step-number">4</span>Nói lại bằng lời của mình</h2><p>${h(topic.reflection)}</p><form data-form="reflection" data-topic="${h(id)}" class="reflection-box"><label class="sr-only" for="reflection-text">Điều bạn hiểu và điều còn băn khoăn</label><textarea class="form-control" id="reflection-text" name="text" required maxlength="10000" placeholder="Mình hiểu rằng… Mình vẫn chưa rõ…"></textarea><button class="btn btn-secondary" style="margin-top:12px" type="submit">Lưu suy nghĩ của mình</button></form></section>${qualityPanel(state2, topic)}<div class="source-note">${h(sourceLabel(topic))}<br>Bài học và ví dụ do stem tự biên soạn; tài liệu gốc hỗ trợ phương pháp học.</div></div><aside class="lesson-aside"><div class="card"><span class="eyebrow">Viên gạch trước đó</span><h3 style="margin-top:8px">Nền tảng gợi ý</h3>${pre.length ? `<p style="margin:8px 0 10px">Nếu thấy khó, quay lại một ý dưới đây. Bạn vẫn có thể học tiếp bài này.</p>${pre.map((p) => link("learn/" + p.id, `${h(p.title)} ${icon("arrow")}`, "prerequisite-link")).join("")}` : "<p>Đây là một điểm bắt đầu. Chỉ cần sẵn sàng thử và hỏi lại.</p>"}</div><div class="card"><span class="eyebrow">Bằng chứng của bạn</span><h3 style="margin-top:8px">${h(e.label)}</h3><div class="evidence-list"><div class="evidence-item"><strong>${e.independent} lần tự làm đúng</strong></div><div class="evidence-item"><strong>${e.guided} lần đúng có hỗ trợ</strong></div><div class="evidence-item"><strong>${e.days} ngày có bài tự làm đúng</strong></div></div><p style="margin-top:10px">Đây là ước lượng tại chỗ, chưa phải điểm TSA.</p></div><div class="card"><span class="topic-icon purple">${icon("chat")}</span><h3 style="margin-top:14px">Bí một chỗ? Hỏi từ đó.</h3><p style="margin-top:8px">Nói điều bạn đã thử, mình cùng tìm bước tiếp theo.</p>${link("tutor", "Mở bạn đồng hành", "btn btn-ghost")}</div></aside></div>`;
   }
   function assess(state2) {
     return `${pageHead("Để biết nên học gì tiếp", "Kiểm tra mức độ hiểu", "Một bài ngắn để tìm nền tảng còn thiếu. Đây là câu hỏi tự biên soạn, chưa phải đề thi chuẩn hóa TSA.")}${state2.activeAssessment ? `<section class="focus-card" style="margin-bottom:24px"><div><span class="eyebrow">Bài đang làm</span><h3 style="margin-top:7px">Bạn đang ở câu ${state2.activeAssessment.index + 1}/${state2.activeAssessment.questions.length}</h3><p>Kết quả từng câu đã trả lời được lưu trên thiết bị này.</p></div>${link("assessment", `Tiếp tục ${icon("arrow")}`, "btn btn-primary")}</section>` : ""}<div class="assessment-cards"><article class="card assessment-intro"><span class="topic-icon green">${icon("sprout")}</span><span class="eyebrow" style="margin-top:20px">Tìm điểm bắt đầu</span><h2 style="margin-top:8px">Khảo sát nền tảng</h2><p>12 câu trải qua Toán, Đọc hiểu và Khoa học. Chưa biết là thông tin có ích, không phải điều đáng ngại.</p><ul><li>Không giới hạn thời gian</li><li>Có lựa chọn “Mình chưa học”</li><li>Gợi ý bài học từ kết quả thực tế</li></ul>${action("start-assessment", `Bắt đầu khảo sát ${icon("arrow")}`, 'data-mode="diagnostic"')}</article><article class="card assessment-intro"><span class="topic-icon purple">${icon("clock")}</span><span class="eyebrow" style="margin-top:20px">Thử trong một khoảng thời gian</span><h2 style="margin-top:8px">Luyện tập tổng hợp</h2><p>15 câu tự biên soạn trong 15 phút để luyện đọc kỹ, phân chia thời gian và kiểm tra lại.</p><ul><li>6 Toán · 3 Đọc hiểu · 6 Khoa học</li><li>Đồng hồ vẫn tính khi rời trang</li><li>Báo số đúng, chưa quy đổi điểm TSA</li></ul>${action("start-assessment", `Luyện tổng hợp ${icon("arrow")}`, 'data-mode="practice"', "btn btn-secondary")}</article><article class="card assessment-intro"><span class="topic-icon peach">${icon("refresh")}</span><span class="eyebrow" style="margin-top:20px">Nhớ lại là một lần học</span><h2 style="margin-top:8px">Ôn điều cần củng cố</h2><p>Chọn lại các nền tảng đã làm và ưu tiên những phần đến lúc ôn. Khi chưa có dữ liệu, bắt đầu bằng bài nền.</p><ul><li>Tối đa 5 câu theo chủ đề</li><li>Thử trước khi mở gợi ý</li><li>Giải thích điều đã hiểu</li></ul>${action("start-assessment", `Ôn lại ${icon("arrow")}`, 'data-mode="review"', "btn btn-secondary")}</article></div><div class="source-note" style="margin-top:24px">Mục tiêu 90+ là đích bạn hướng tới, không phải kết quả ứng dụng có thể bảo đảm. Kết quả luyện tập được dùng để điều chỉnh việc học; cấu trúc bài và cách chấm chưa mô phỏng kỳ thi chính thức.</div>`;
@@ -2593,10 +2951,10 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
     if (!q) return empty("Bài làm cần mở lại", "Dữ liệu câu hỏi không còn khả dụng.", link("assess", "Về kiểm tra"));
     const topic = getTopic(q.topicId), chosen = a.selection || "", hintLevel = Math.min(3, n(a.hintLevel)), answered = !!a.answered;
     let left = a.expiresAt ? Math.max(0, (Date.parse(a.expiresAt) - Date.now()) / 1e3) : null;
-    return `${pageHead("Không cần biết hết, chỉ cần thử", a.mode === "diagnostic" ? "Khảo sát nền tảng" : a.mode === "practice" ? "Luyện tập tổng hợp" : a.mode === "review" ? "Ôn lại kiến thức" : topic?.title || "Luyện theo chủ đề", "Câu hỏi tự biên soạn · Kết quả phản ánh bài làm này, chưa phải điểm TSA.", action("quit-assessment", "Tạm rời bài", "", "btn btn-ghost"))}<div class="quiz-header"><span class="chip">Câu ${a.index + 1} / ${a.questions.length}</span>${left !== null ? `<span class="study-timer">${icon("clock")}<strong data-assessment-timer="${h(a.expiresAt)}">${time(left)}</strong></span>` : '<span class="muted text-small">Không giới hạn thời gian</span>'}</div><div class="progress-track" aria-label="Đã đi qua ${a.index} trong ${a.questions.length} câu"><div class="progress-fill" style="width:${Math.round(a.index / a.questions.length * 100)}%"></div></div><div class="assessment-layout"><section class="question-card"><div class="row between">${topic ? domainTag(topic) : ""}<span class="tag">${q.transfer ? "Kết nối tình huống mới" : "Xây nền từng bước"}</span></div>${q.context ? `<div class="question-context">${h(q.context)}</div>` : ""}${q.table ? `<div class="table-wrap"><table><caption class="sr-only">Dữ liệu cho câu hỏi</caption><thead><tr>${q.table.headers.map((v) => `<th scope="col">${h(v)}</th>`).join("")}</tr></thead><tbody>${q.table.rows.map((row) => `<tr>${row.map((v) => `<td>${h(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}<h2 id="question-prompt">${h(q.prompt)}</h2><div class="question-options" role="group" aria-labelledby="question-prompt">${q.options.map((o, i) => {
+    return `${pageHead("Không cần biết hết, chỉ cần thử", a.mode === "diagnostic" ? "Khảo sát nền tảng" : a.mode === "practice" ? "Luyện tập tổng hợp" : a.mode === "review" ? "Ôn lại kiến thức" : topic?.title || "Luyện theo chủ đề", "Câu hỏi tự biên soạn · Kết quả phản ánh bài làm này, chưa phải điểm TSA.", action("quit-assessment", "Tạm rời bài", "", "btn btn-ghost"))}<div class="quiz-header"><span class="chip">Câu ${a.index + 1} / ${a.questions.length}</span>${left !== null ? `<span class="study-timer">${icon("clock")}<strong data-assessment-timer="${h(a.expiresAt)}">${time(left)}</strong></span>` : '<span class="muted text-small">Không giới hạn thời gian</span>'}</div><div class="progress-track" aria-label="Đã đi qua ${a.index} trong ${a.questions.length} câu"><div class="progress-fill" style="width:${Math.round(a.index / a.questions.length * 100)}%"></div></div><div class="assessment-layout"><section class="question-card" tabindex="-1"><div class="row between">${topic ? domainTag(topic) : ""}<span class="tag">${q.transfer ? "Kết nối tình huống mới" : "Xây nền từng bước"}</span></div>${q.context ? `<div class="question-context">${h(q.context)}</div>` : ""}${q.table ? `<div class="table-wrap"><table><caption class="sr-only">Dữ liệu cho câu hỏi</caption><thead><tr>${q.table.headers.map((v) => `<th scope="col">${h(v)}</th>`).join("")}</tr></thead><tbody>${q.table.rows.map((row) => `<tr>${row.map((v) => `<td>${h(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}<h2 id="question-prompt">${h(q.prompt)}</h2><div class="question-options" role="group" aria-labelledby="question-prompt">${q.options.map((o, i) => {
       let cls = "answer-option" + (chosen === o ? " selected" : "") + (answered && o === q.answer ? " correct" : "") + (answered && chosen === o && !a.lastCorrect ? " incorrect" : "");
       return action("choose-answer", `<span class="answer-letter">${String.fromCharCode(65 + i)}</span><span>${h(o)}</span>`, `data-value="${h(o)}" aria-pressed="${chosen === o}" ${answered ? "disabled" : ""}`, cls);
-    }).join("")}</div>${!answered ? `<div class="confidence-panel"><span>Bạn tự tin đến đâu?</span><div class="row">${[["low", "Mình đang đoán"], ["medium", "Khá chắc"], ["high", "Mình giải thích được"]].map(([v, label]) => action("confidence", h(label), `data-value="${v}" aria-pressed="${(a.confidence || "medium") === v}"`, "chip " + ((a.confidence || "medium") === v ? "green" : ""))).join("")}</div></div>` : ""}${hintLevel ? `<div class="hint-stack">${(q.hints || []).slice(0, hintLevel).map((hint, i) => `<div class="hint-box"><strong>Gợi ý ${i + 1}</strong><p>${h(hint)}</p></div>`).join("")}</div>` : ""}${answered ? `<div class="feedback ${a.lastCorrect ? "correct" : "incorrect"}" role="status"><h3>${icon(a.lastCorrect ? "checkCircle" : "leaf")} ${a.lastUnknown ? "Mình ghi nhận phần chưa học." : a.lastCorrect ? hintLevel ? "Đúng rồi. Mình vừa học qua gợi ý." : "Đúng rồi. Hãy giữ lại cách nghĩ này." : "Mình cùng nhìn lại cách giải."}</h3><p><strong>Đáp án: ${h(q.answer)}</strong></p><p>${h(q.explanation)}</p>${!a.lastCorrect && q.misconception ? `<p style="margin-top:10px"><strong>Điều dễ nhầm:</strong> ${h(q.misconception)}</p>` : ""}<p style="margin-top:12px;font-size:11px">${a.lastUnknown ? "“Chưa học” được ghi riêng để gợi ý nền tảng." : a.lastCorrect && hintLevel === 0 ? "Một lần trả lời đúng là một bằng chứng nhỏ. Cần thử câu khác và nhớ lại sau để biết mình đã nắm vững." : "Lần làm có trợ giúp hoặc cần sửa được ghi riêng; bạn có thể quay lại luyện sau."}</p></div><div class="question-actions">${action("next-question", `${a.index + 1 === a.questions.length ? "Xem kết quả" : "Câu tiếp theo"} ${icon("arrow")}`)}</div>` : `<div class="question-actions"><div class="row">${action("hint", `${icon("help")} Gợi ý ${hintLevel}/3`, `${hintLevel >= Math.min(3, q.hints?.length || 0) ? "disabled" : ""}`, "btn btn-ghost")}${action("unknown", "Mình chưa học", "", "btn btn-secondary")}</div>${action("submit-answer", `Kiểm tra ${icon("arrow")}`, `${chosen ? "" : "disabled"}`)}</div>`}</section><aside class="assessment-note"><span class="topic-icon green">${icon("sprout")}</span><h3>Một câu, một cơ hội hiểu.</h3><p>Đọc kỹ điều đề cho. Thử diễn đạt bằng lời, kiểm tra đơn vị và điều kiện rồi mới chọn.</p><p>Nếu bí, dùng từng gợi ý. Bạn không cần đoán để “giữ điểm”.</p><div class="source-note">Tiến bộ được ghi từ việc bạn thực sự làm; chưa quy đổi thành điểm thi.</div></aside></div>`;
+    }).join("")}</div>${!answered ? `<div class="confidence-panel"><span>Bạn tự tin đến đâu?</span><div class="row">${[["low", "Mình đang đoán"], ["medium", "Khá chắc"], ["high", "Mình giải thích được"]].map(([v, label]) => action("confidence", h(label), `data-value="${v}" aria-pressed="${(a.confidence || "medium") === v}"`, "chip " + ((a.confidence || "medium") === v ? "green" : ""))).join("")}</div></div>` : ""}${hintLevel ? `<div class="hint-stack">${(q.hints || []).slice(0, hintLevel).map((hint, i) => `<div class="hint-box"><strong>Gợi ý ${i + 1}</strong><p>${h(hint)}</p></div>`).join("")}</div>` : ""}${answered ? `<div class="feedback ${a.lastCorrect ? "correct" : "incorrect"}" role="status" tabindex="-1"><div class="question-actions ${a.lastCorrect ? "is-correct" : "is-incorrect"}"><h3 class="answer-state">${icon(a.lastCorrect ? "checkCircle" : a.lastUnknown ? "help" : "close")} ${a.lastUnknown ? "Chưa học" : a.lastCorrect ? "Chính xác!" : "Chưa chính xác"}</h3><details class="answer-explanation"><summary>Tại sao? Xem lời giải</summary><div class="answer-explanation-body"><h3>${a.lastUnknown ? "Cùng xem nền tảng của câu này." : a.lastCorrect && hintLevel ? "Bạn vừa làm đúng với gợi ý." : "Mình cùng xem cách giải."}</h3><p><strong>Đáp án: ${h(q.answer)}</strong></p><p>${h(q.explanation)}</p>${!a.lastCorrect && q.misconception ? `<p style="margin-top:10px"><strong>Điều dễ nhầm:</strong> ${h(q.misconception)}</p>` : ""}<p style="margin-top:12px;font-size:12px">${a.lastUnknown ? "“Chưa học” được ghi riêng để gợi ý nền tảng." : a.lastCorrect && hintLevel === 0 ? "Một lần trả lời đúng là một bằng chứng nhỏ. Cần thử câu khác và nhớ lại sau để biết mình đã nắm vững." : "Lần làm có trợ giúp hoặc cần sửa được ghi riêng; bạn có thể quay lại luyện sau."}</p></div></details>${action("next-question", `${a.index + 1 === a.questions.length ? "Xem kết quả" : "Câu tiếp theo"} ${icon("arrow")}`)}</div></div>` : `<div class="question-actions"><div class="row">${action("hint", `${icon("help")} Gợi ý ${hintLevel}/3`, `${hintLevel >= Math.min(3, q.hints?.length || 0) ? "disabled" : ""}`, "btn btn-ghost")}${action("unknown", "Mình chưa học", "", "btn btn-secondary")}</div>${action("submit-answer", `Kiểm tra ${icon("arrow")}`, `${chosen ? "" : "disabled"}`)}</div>`}</section><aside class="assessment-note"><span class="topic-icon green">${icon("sprout")}</span><h3>Một câu, một cơ hội hiểu.</h3><p>Đọc kỹ điều đề cho. Thử diễn đạt bằng lời, kiểm tra đơn vị và điều kiện rồi mới chọn.</p><p>Nếu bí, dùng từng gợi ý. Bạn không cần đoán để “giữ điểm”.</p><div class="source-note">Tiến bộ được ghi từ việc bạn thực sự làm; chưa quy đổi thành điểm thi.</div></aside></div>`;
   }
   function results(state2, id) {
     const r = state2.assessments.find((v) => v.id === id) || state2.assessments.at(-1);
@@ -2625,7 +2983,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
   }
   function tutor(state2, ui2) {
     const id = ui2.tutorTopic || topics[0]?.id, topic = getTopic(id), online = !!ui2.api?.aiAvailable && state2.profile.aiConsent;
-    return `${pageHead("Một người bạn để cùng đặt câu hỏi", "Mình cùng tháo từng nút nhé.", "Nói bạn đã thử điều gì và đang vướng ở đâu. Hỏi một bước nhỏ thường dễ đi tiếp hơn.")}<div class="lesson-layout"><section class="chat-panel"><div class="chat-header"><div class="row"><span class="topic-icon green">${icon("sprout")}</span><div><h2>Mầm đồng hành</h2><span class="chat-status">${online ? "AI trực tuyến đã sẵn sàng" : "Chế độ hướng dẫn có sẵn"}</span></div></div>${action("ai-info", `${icon("info")} Cách hoạt động`, "", "btn btn-ghost btn-sm")}</div><div class="chat-messages" role="log" aria-label="Cuộc trò chuyện">${state2.chat.length ? state2.chat.map((m) => `<div class="chat-bubble ${m.role === "user" ? "user" : "assistant"}">${h(m.content)}${m.role === "assistant" ? `<span class="chat-mode">${m.mode === "online" ? "AI trực tuyến · hãy kiểm tra lại lập luận" : "Hướng dẫn được biên soạn sẵn"}</span>` : ""}</div>`).join("") : `<div class="chat-bubble assistant">Mình đang ở chế độ ${online ? "AI trực tuyến" : "hướng dẫn có sẵn"}. Bạn có thể chọn một bài, mở gợi ý hoặc hỏi cách kiểm tra lời giải. ${online ? "Mình sẽ cùng phân tích; câu trả lời AI vẫn cần đối chiếu." : "Chế độ này dùng quy tắc và nội dung bài học, chưa phải AI hiểu mọi câu hỏi."}</div>`}${ui2.chatPending ? '<div class="chat-bubble" role="status">Đang xem câu hỏi của bạn…</div>' : ""}</div><form class="chat-form" data-form="chat"><label for="chat-message" class="sr-only">Câu hỏi gửi bạn đồng hành</label><textarea class="form-control" id="chat-message" name="message" maxlength="3000" rows="1" placeholder="Mình chưa hiểu vì sao…" required ${ui2.chatPending ? "disabled" : ""}></textarea><button type="submit" class="btn btn-primary" aria-label="Gửi câu hỏi" ${ui2.chatPending ? "disabled" : ""}>${icon("send")}<span class="send-label">Gửi</span></button></form><div class="chat-suggestions">${["Giải thích đơn giản hơn", "Cho mình một gợi ý nhỏ", "Mình tự kiểm tra thế nào?"].map((m) => action("tutor-preset", h(m), `data-message="${h(m)}" ${ui2.chatPending ? "disabled" : ""}`, "")).join("")}</div></section><aside class="lesson-aside"><div class="card"><div class="form-group"><label for="tutor-topic">Mình đang học về</label><select id="tutor-topic" class="form-control">${topics.map((t) => `<option value="${h(t.id)}" ${t.id === id ? "selected" : ""}>${h(t.title)}</option>`).join("")}</select></div>${topic ? `<p style="margin-top:15px">${h(topic.why)}</p>${link("learn/" + id, `Mở bài học ${icon("arrow")}`, "btn btn-ghost") + action("start-assessment", "Tự kiểm tra chủ đề này", 'data-mode="topic" data-topic="' + h(id) + '"', "btn btn-secondary")}` : ""}</div><div class="tutor-mode-note">${online ? "AI có thể giải thích linh hoạt nhưng vẫn có thể sai. Kiểm tra điều kiện, đơn vị và cách suy luận." : "Chưa bật AI trực tuyến. Bạn vẫn học, luyện bài, nhận gợi ý và lưu tiến độ được. Chế độ có sẵn không xử lý tự do mọi câu hỏi."}${link("settings", "Xem cài đặt AI", "btn btn-ghost")}</div></aside></div>`;
+    return `${pageHead("Một người bạn để cùng đặt câu hỏi", "Mình cùng tháo từng nút nhé.", "Nói bạn đã thử điều gì và đang vướng ở đâu. Hỏi một bước nhỏ thường dễ đi tiếp hơn.")}<div class="lesson-layout"><section class="chat-panel"><div class="chat-header"><div class="row"><span class="topic-icon green">${icon("sprout")}</span><div><h2>stem đồng hành</h2><span class="chat-status">${online ? "AI trực tuyến đã sẵn sàng" : "Chế độ hướng dẫn có sẵn"}</span></div></div>${action("ai-info", `${icon("info")} Cách hoạt động`, "", "btn btn-ghost btn-sm")}</div><div class="chat-messages" role="log" aria-label="Cuộc trò chuyện">${state2.chat.length ? state2.chat.map((m) => `<div class="chat-bubble ${m.role === "user" ? "user" : "assistant"}">${h(m.content)}${m.role === "assistant" ? `<span class="chat-mode">${m.mode === "online" ? "AI trực tuyến · hãy kiểm tra lại lập luận" : "Hướng dẫn được biên soạn sẵn"}</span>` : ""}</div>`).join("") : `<div class="chat-bubble assistant">Mình đang ở chế độ ${online ? "AI trực tuyến" : "hướng dẫn có sẵn"}. Bạn có thể chọn một bài, mở gợi ý hoặc hỏi cách kiểm tra lời giải. ${online ? "Mình sẽ cùng phân tích; câu trả lời AI vẫn cần đối chiếu." : "Chế độ này dùng quy tắc và nội dung bài học, chưa phải AI hiểu mọi câu hỏi."}</div>`}${ui2.chatPending ? '<div class="chat-bubble" role="status">Đang xem câu hỏi của bạn…</div>' : ""}</div><form class="chat-form" data-form="chat"><label for="chat-message" class="sr-only">Câu hỏi gửi bạn đồng hành</label><textarea class="form-control" id="chat-message" name="message" maxlength="3000" rows="1" placeholder="Mình chưa hiểu vì sao…" required ${ui2.chatPending ? "disabled" : ""}></textarea><button type="submit" class="btn btn-primary" aria-label="Gửi câu hỏi" ${ui2.chatPending ? "disabled" : ""}>${icon("send")}<span class="send-label">Gửi</span></button></form><div class="chat-suggestions">${["Giải thích đơn giản hơn", "Cho mình một gợi ý nhỏ", "Mình tự kiểm tra thế nào?"].map((m) => action("tutor-preset", h(m), `data-message="${h(m)}" ${ui2.chatPending ? "disabled" : ""}`, "")).join("")}</div></section><aside class="lesson-aside"><div class="card"><div class="form-group"><label for="tutor-topic">Mình đang học về</label><select id="tutor-topic" class="form-control">${topics.map((t) => `<option value="${h(t.id)}" ${t.id === id ? "selected" : ""}>${h(t.title)}</option>`).join("")}</select></div>${topic ? `<p style="margin-top:15px">${h(topic.why)}</p>${link("learn/" + id, `Mở bài học ${icon("arrow")}`, "btn btn-ghost") + action("start-assessment", "Tự kiểm tra chủ đề này", 'data-mode="topic" data-topic="' + h(id) + '"', "btn btn-secondary")}` : ""}</div><div class="tutor-mode-note">${online ? "AI có thể giải thích linh hoạt nhưng vẫn có thể sai. Kiểm tra điều kiện, đơn vị và cách suy luận." : "Chưa bật AI trực tuyến. Bạn vẫn học, luyện bài, nhận gợi ý và lưu tiến độ được. Chế độ có sẵn không xử lý tự do mọi câu hỏi."}${link("settings", "Xem cài đặt AI", "btn btn-ghost")}</div></aside></div>`;
   }
   function settings(state2, ui2) {
     const p = state2.profile;
@@ -2640,7 +2998,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
         body = today(state2, ui2);
         break;
       case "roadmap":
-        body = roadmap(state2, ui2).replace("</header>", "</header>" + weeklyCalendar(state2));
+        body = roadmap(state2, ui2);
         break;
       case "learn":
         body = lesson(state2, ui2, id);
@@ -2667,7 +3025,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
         body = settings(state2, ui2);
         break;
       default:
-        body = pageHead("Mầm TSA", "Trang này chưa có", "Quay về hôm nay để tiếp tục hành trình học của bạn.") + link("today", "Về hôm nay");
+        body = pageHead("stem", "Trang này chưa có", "Quay về hôm nay để tiếp tục hành trình học của bạn.") + link("today", "Về hôm nay");
     }
     return shell(state2, ui2, body);
   }
@@ -2934,7 +3292,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
     const topic = topics.find((t) => t.id === id);
     if (!topic) return;
     const draft = document.querySelector('form[data-form="reflection"] [name="text"]')?.value || "";
-    openModal("Kiểm tra mức hiểu sau phần học", "<p><strong>" + h(topic.title) + '</strong></p><p>Viết điều bạn hiểu, rồi thử 5 câu đổi dữ kiện. Mầm sẽ ghi riêng phần tự làm, phần cần gợi ý và lỗi cần sửa. Một lượt đúng chưa đủ xác nhận nhớ lâu; mình còn kiểm tra lại sau ít nhất 24 giờ.</p><form data-form="chapter-check" data-topic="' + h(id) + '"><label class="form-group" for="chapter-reflection">' + h(topic.reflection) + '<textarea id="chapter-reflection" class="form-control" name="text" required maxlength="10000" placeholder="Mình hiểu rằng… Mình còn băn khoăn… Nếu chưa rõ, cứ ghi điều đó.">' + h(draft) + '</textarea></label><p class="muted text-small">Phần viết giúp bạn tự nhìn lại; hiện chưa được tự động chấm đúng/sai.</p><div class="row" style="margin-top:16px"><button type="submit" class="btn btn-primary">Bắt đầu kiểm tra 5 câu</button>' + btn("close-modal", "Để sau") + "</div></form>");
+    openModal("Kiểm tra mức hiểu sau phần học", "<p><strong>" + h(topic.title) + '</strong></p><p>Viết điều bạn hiểu, rồi thử 5 câu đổi dữ kiện. stem sẽ ghi riêng phần tự làm, phần cần gợi ý và lỗi cần sửa. Một lượt đúng chưa đủ xác nhận nhớ lâu; mình còn kiểm tra lại sau ít nhất 24 giờ.</p><form data-form="chapter-check" data-topic="' + h(id) + '"><label class="form-group" for="chapter-reflection">' + h(topic.reflection) + '<textarea id="chapter-reflection" class="form-control" name="text" required maxlength="10000" placeholder="Mình hiểu rằng… Mình còn băn khoăn… Nếu chưa rõ, cứ ghi điều đó.">' + h(draft) + '</textarea></label><p class="muted text-small">Phần viết giúp bạn tự nhìn lại; hiện chưa được tự động chấm đúng/sai.</p><div class="row" style="margin-top:16px"><button type="submit" class="btn btn-primary">Bắt đầu kiểm tra 5 câu</button>' + btn("close-modal", "Để sau") + "</div></form>");
   }
   function route() {
     const hash = location.hash.slice(1);
@@ -3225,7 +3583,7 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
           openAIInfo();
           break;
         case "mobile-more":
-          openModal("Góc học tập của bạn", '<div class="stack"><a class="btn btn-secondary" href="#notebook">Sổ hiểu biết</a><a class="btn btn-secondary" href="#tutor">Trợ lý học tập</a><a class="btn btn-secondary" href="#settings">Cài đặt & sao lưu</a></div>', btn("close-modal", "Đóng"));
+          openModal("Góc học tập của bạn", '<nav class="stack" aria-label="Các mục học tập khác"><a class="btn btn-secondary" href="#today">Hôm nay</a><a class="btn btn-secondary" href="#roadmap">Khóa học</a><a class="btn btn-secondary" href="#progress">Tiến bộ</a><a class="btn btn-secondary" href="#assess">Kiểm tra hiểu</a><a class="btn btn-secondary" href="#notebook">Sổ tay của mình</a><a class="btn btn-secondary" href="#tutor">Bạn đồng hành</a><a class="btn btn-secondary" href="#settings">Cài đặt & dữ liệu</a></nav>', btn("close-modal", "Đóng"));
           break;
         case "filter":
           ui.filter = element.dataset.domain || "all";
@@ -3395,13 +3753,17 @@ nav[aria-label="Trang ghi chép"]{flex-wrap:wrap;gap:10px}
           go("today");
           break;
         case "download-standalone": {
-          if (ui.standalone) {
+          if (ui.standalone && (location.protocol === "file:" || !navigator.onLine)) {
             toast("Bạn đang dùng bản HTML ngoại tuyến. Hãy giữ tệp này cùng bản sao lưu tiến độ.");
             break;
           }
-          const response = await fetch("/dist/mam-tsa.html");
-          if (!response.ok) throw new Error("Bản HTML chưa được tạo. Chạy bước tạo bản dùng ngoại tuyến trước.");
-          download(await response.text(), "mam-tsa.html", "text/html");
+          const sourceURL = new URL(ui.standalone ? location.href : "/dist/mam-tsa.html", location.href);
+          sourceURL.hash = "";
+          const response = await fetch(sourceURL);
+          if (!response.ok) throw new Error("Chưa tải được bản HTML. Bạn hãy thử lại khi có mạng.");
+          const html = await response.text();
+          if (!html.includes("__TSA_STANDALONE__")) throw new Error("Tệp trả về chưa phải bản ứng dụng ngoại tuyến. Bạn hãy thử lại sau.");
+          download(html, "mam-tsa.html", "text/html");
           toast("Đã tạo tệp HTML dùng ngoại tuyến. Dữ liệu giữa hai bản được chuyển bằng sao lưu.");
           break;
         }

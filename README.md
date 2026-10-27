@@ -1,4 +1,4 @@
-# Mầm TSA
+# stem
 
 Ứng dụng tiếng Việt giúp người mới bắt đầu học từng nền tảng, tự thử bài và theo
 dõi bằng chứng đã hiểu. Thiết lập ban đầu là **150 phút/ngày**, hướng tới mục tiêu
@@ -7,18 +7,24 @@ trong Cài đặt. Đây chưa phải lịch thi chính thức và ứng dụng 
 
 ## Bắt đầu nếu bạn không biết code
 
-1. Mở ứng dụng, vào **Cài đặt & dữ liệu**. Trên điện thoại, mở **Thêm** để tìm mục này.
+1. Mở ứng dụng trên PC, chọn **Thêm → Cài đặt & dữ liệu**.
 2. Chọn **Tải ứng dụng HTML**, giữ tệp `mam-tsa.html` ở nơi dễ tìm trên máy.
 3. Mở tệp đó bằng trình duyệt hiện đại. Bài học, bài luyện, gợi ý có sẵn và sổ tay
    chạy ngay cả khi không có mạng. Không cần cài Node.js để mở tệp HTML này.
-4. Vào **Kiểm tra hiểu**, chọn khảo sát nền tảng; nếu chưa biết, chọn “Mình chưa học”.
+4. Vào **Thêm → Kiểm tra hiểu**, chọn khảo sát nền tảng; nếu chưa biết, chọn “Mình chưa học”.
 5. Vào **Hôm nay** để xem bài gợi ý và chia buổi học thành các khoảng vừa sức.
 
 Mặc định 150 phút/ngày gồm **135 phút tập trung và 15 phút nghỉ**: ba phiên, mỗi
 phiên 45 phút học và 5 phút nghỉ. Đồng hồ chỉ cộng thời gian tập trung. Trong
-**Lộ trình học**, mở lịch từng tuần để xem những nền tảng nên học tiếp. Với mốc
+**Khóa học**, mở lịch từng tuần để xem những nền tảng nên học tiếp. Với mốc
 bắt đầu 19/10/2026 và mục tiêu tháng 5/2027, lịch ban đầu gồm 28 tuần; thời lượng,
 lỗi đã lưu và tháng mục tiêu giúp điều chỉnh gợi ý. Đây vẫn là lịch xây nền.
+Giao diện bản 0.2 ưu tiên PC, tham khảo các màn danh mục và bài học trong clip
+Brilliant bạn cung cấp. Màn Hôm nay và Tiến bộ phục vụ riêng mục tiêu TSA. Bản này
+chưa xác nhận giống toàn bộ Brilliant; phần tối ưu và nghiệm thu riêng trên điện
+thoại được để sau theo lựa chọn của bạn. Nội dung vẫn gồm 21 chủ đề nền tảng,
+chưa bao phủ đầy đủ danh mục Toán hoặc toàn bộ TSA.
+
 Lịch giữ mốc tuần theo ngày bạn bắt đầu và chỉ rõ tuần hiện tại, nên quay lại vào
 tháng sau không trở về tuần đầu. Qua tháng mục tiêu, ứng dụng tiếp tục với các
 chu kỳ 4 tuần có ngày cụ thể; mục tiêu xa hơn một năm được hiển thị theo từng
@@ -121,7 +127,7 @@ dung tự biên soạn.
 
 Không đóng gói sách, PDF người dùng gửi hoặc bản phân tích toàn văn vào ứng dụng
 hay mã nguồn phát hành. Giấy phép MIT trong [LICENSE](LICENSE) áp dụng cho phần
-mã và nội dung gốc của Mầm TSA theo phạm vi được ghi trong giấy phép, không cấp
+mã và nội dung gốc của stem theo phạm vi được ghi trong giấy phép, không cấp
 quyền với sách hoặc tài liệu của bên khác. Công cụ phát triển bên thứ ba giữ giấy
 phép riêng.
 
